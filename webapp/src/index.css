@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --ant-primary-color: #2ac9cd;
+  --text-xs--line-height: 1.25rem;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  font-family: "Poppins";
+  color: #252525;
+}
+
+.ant-layout {
+  height: 100%;
+}
+
+.ant-layout-header {
+  z-index: 1;
+}
+
+.principal-menu {
+  padding: 20px !important;
+  background-color: #17a38d !important;
+}
+
+.principal-menu .ant-menu-item {
+  margin: 0 !important;
+  width: 100% !important;
+  height: 45px !important;
+}
+
+.principal-menu .ant-menu-item-selected {
+  background-color: #fff !important;
+  color: #17a38d !important;
+}
+
+.principal-menu .ant-menu-item-selected .icon {
+  filter: brightness(0) saturate(100%) invert(14%) sepia(58%) saturate(2318%) hue-rotate(187deg) brightness(96%) contrast(91%);
+}
+
+.ant-checkbox .ant-checkbox-inner {
+  width: 25px;
+  height: 25px;
+}
+
+.ant-checkbox-wrapper.ant-checkbox-wrapper-in-form-item input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+}
+
+.ant-checkbox-wrapper {
+  min-height: 37px !important;
+  display: flex;
+  align-items: center;
+}
+
+.ant-checkbox .ant-checkbox-inner:after {
+  top: 44%;
+  width: 7.714286px;
+  height: 13.142857px;
+}
+
+.ant-btn {
+  box-shadow: none !important;
+}
+
+.ant-btn-primary {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: #17a38d !important;
+  border-color: #17a38d !important;
+}
+
+.learn-more-modal .ant-modal-content {
+  padding: 0 !important;
+}
+
+input,
+select,
+textarea,
+.ant-select-selector,
+.ant-picker,
+.ant-input-number,
+.ant-radio-button-wrapper,
+.ant-checkbox-inner,
+.ant-input-password {
+  border-color: #8bd1c6 !important;
+  font-size: 14px !important;
+}
+
+.ant-picker,
+select {
+  min-height: 40px !important;
+}
+
+.ant-radio-button-wrapper,
+.ant-btn-lg {
+  font-size: 14px !important;
+}
+
+/* EREFS */
+
+.erefs,
+.erefs .ant-form-item-row,
+.erefs .ant-form-item-control,
+.erefs .ant-form-item-control-input,
+.erefs .ant-form-item-control-input-content,
+.erefs .ant-radio-group,
+.erefs .ant-radio-button-wrapper.img {
+  height: 100%;
+}
+
+/* PATIENT */
+
+.ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
+  padding-left: 0 !important;
+}
+
+.patient-tabs .ant-tabs-content-holder {
+  border: 0 !important;
+  max-height: calc(100vh - 156px);
+  overflow-y: auto;
+  padding: 0 20px 0 20px;
+}
+
+.patient-tabs .ant-tabs-tab {
+  border-radius: 5px !important;
+  margin-bottom: 10px !important;
+}
+
+label:not(.ant-radio-wrapper, .ant-radio-button-wrapper-block),
+p.label {
+  color: #000000;
+  font-size: 16px !important;
+  font-weight: bold;
+}
+
+label::after {
+  display: none;
+}
+
+.smoking_habits .ant-form-item-control-input-content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.smoking_habits .ant-radio-wrapper {
+  align-items: center !important;
+}
+
+.ant-radio-wrapper .ant-radio-inner {
+  width: 24px;
+  height: 24px;
+}
+
+.smoking_habits .ant-form-item-label {
+  margin-right: 20px;
+}
+
+.ant-form-item-horizontal .ant-form-item-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#alcohol_habits {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+#alcohol_habits .ant-radio-wrapper {
+  width: 50%;
+  margin-inline-end: 0px;
+}
+
+.ant-form-item-vertical .ant-radio-group {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+#charlson-index .ant-radio-group:not(#age, #diabetes_mellitus, #liver_disease, #solid_tumor) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#charlson-index .ant-radio-group:not(#age, #diabetes_mellitus, #liver_disease, #solid_tumor) .ant-radio-button-wrapper {
+  width: 50%;
+}
+
+.ant-radio-group-block .ant-radio-button-wrapper {
+  border-radius: 8px !important;
+}
+
+.ant-drawer-footer {
+  padding: 0 !important;
+}
+
+@import "tailwindcss";
