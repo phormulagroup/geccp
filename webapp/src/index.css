@@ -205,4 +205,8 @@ label::after {
   padding: 0 !important;
 }
 
+.number-button {
+  min-width: 40px;
+}
+
 @import "tailwindcss";

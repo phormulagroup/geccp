@@ -83,30 +83,30 @@ const Main = () => {
       <Logout open={isOpenLogout} close={() => setIsOpenLogout(false)} submit={logout} />
       <Layout>
         {windowDimension.width > 1080 ? (
-          <Sider width={250} className="!bg-[#17A38D]">
+          <Sider width={250} className="bg-[#17A38D]!">
             <div className="flex flex-col h-full p-4">
-              <img src={logo} className="max-w-[160px] mx-auto" />
-              <div className="mt-[40px]">
+              <img src={logo} className="max-w-40 mx-auto" />
+              <div className="mt-10">
                 <Menu className="principal-menu" selectedKeys={[current]} mode="inline" items={items} onClick={handleClickMenu} />{" "}
               </div>
             </div>
           </Sider>
         ) : (
           <Drawer className="menu-drawer" width={400} open={isOpenDrawerMenu} onClose={() => setIsOpenDrawerMenu(false)} maskClosable={true} closable={false}>
-            <Button type="text" className="absolute right-[20px] top-[20px] font-bold" onClick={() => setIsOpenDrawerMenu(false)}>
+            <Button type="text" className="absolute right-5 top-5 font-bold" onClick={() => setIsOpenDrawerMenu(false)}>
               <CloseOutlined className="text-[#0c3c61]" />
             </Button>
             <div className="bg-[#E9F2FF] flex p-[60px_20px_20px_20px] cursor-pointer" onClick={() => handleClickMenu({ key: "/app/perfil" })}>
-              <Avatar className="w-[50px] h-[50px] mr-2" src={`${config.server_ip}/media/${user.img ?? "User-default.svg"}`} />
+              <Avatar className="w-12.5 h-12.5 mr-2" src={`${config.server_ip}/media/${user.img ?? "User-default.svg"}`} />
               <div className="flex flex-col">
                 <p className="text-[#0c3c61]">Olá,</p>
                 <p className="text-[#0c3c61]">{user["PESSOA"]}</p>
               </div>
             </div>
-            <div className="flex flex-col justify-start items-center p-[20px]">
+            <div className="flex flex-col justify-start items-center p-5">
               <Menu className="principal-menu" selectedKeys={[current]} mode="inline" items={items} onClick={handleClickMenu} />
               <Divider />
-              <a className={`dropdown-item flex items-center w-full min-h-[45px] pl-[24px]`} onClick={() => setIsOpenLogout(true)}>
+              <a className={`dropdown-item flex items-center w-full min-h-11.25 pl-6`} onClick={() => setIsOpenLogout(true)}>
                 <LoginOutlined className="mr-2" /> Logout
               </a>
             </div>
@@ -114,7 +114,7 @@ const Main = () => {
         )}
 
         <Layout>
-          <Header className="!bg-white shadow-[0px_4px_16px_#A7AFB754] flex justify-end items-center">
+          <Header className="bg-white! shadow-[0px_4px_16px_#A7AFB754] flex justify-end items-center">
             <div className="flex justify-end items-center">
               {windowDimension.width > 1080 ? (
                 <Dropdown
@@ -142,7 +142,7 @@ const Main = () => {
                 >
                   <div className="flex justify-center items-center mr-2 cursor-pointer">
                     <Avatar src={`${config.server_ip}/media/${user.img ?? "User-default.svg"}`} />
-                    <p className="text-[12px] ml-2 mr-2">{user.PESSOA}</p>
+                    <p className="text-[12px] ml-2 mr-2">{user.name}</p>
                     <DownOutlined />
                   </div>
                 </Dropdown>

@@ -11,6 +11,10 @@ const helpers = {
     }
     return years;
   },
+
+  calcIMC: (height, weight) => {
+    return Math.round((weight / ((height / 100) * (height / 100))) * 100) / 100;
+  },
 };
 
 export default helpers;
