@@ -173,7 +173,7 @@ export default function PersonalInformation({ data, next, previous }) {
               <Divider className="mt-0! mb-0! h-1 bg-[#17A38D]" />
             </div>
             <div className="col-span-2 flex flex-col">
-              <p className="font-semibold mb-2">Com que frequência consome bebidas que contêm álcool?</p>
+              <p className="font-bold mb-2">Com que frequência consome bebidas que contêm álcool?</p>
               <Form.Item name="alcohol_habits" className="mb-0!" layout="vertical">
                 <Radio.Group
                   size="large"
@@ -196,7 +196,7 @@ export default function PersonalInformation({ data, next, previous }) {
                 getFieldValue("alcohol_habits") !== 5 &&
                 getFieldValue("alcohol_habits") !== undefined && (
                   <div className="flex flex-col mr-6 mt-6">
-                    <p className="font-semibold mb-4">Quando bebe, quantas bebidas contendo álcool consome num dia normal?</p>
+                    <p className="font-bold mb-4">Quando bebe, quantas bebidas contendo álcool consome num dia normal?</p>
                     <Form.Item name="alcohol_normal_day" className="mb-0!" layout="vertical">
                       <Radio.Group
                         vertical
@@ -222,7 +222,7 @@ export default function PersonalInformation({ data, next, previous }) {
                 getFieldValue("alcohol_habits") !== 5 &&
                 getFieldValue("alcohol_habits") !== undefined && (
                   <div className="flex flex-col mt-6">
-                    <p className="font-semibold mb-4">Com que frequência consome seis bebidas ou mais numa única ocasião?</p>
+                    <p className="font-bold mb-4">Com que frequência consome seis bebidas ou mais numa única ocasião?</p>
                     <Form.Item name="alcohol_six_or_more" className="mb-0!" layout="vertical">
                       <Radio.Group
                         vertical

@@ -63,7 +63,7 @@ function Login() {
             <img src={logoStudy} className="w-full max-w-[300px]" />
           </div>
           <div className="flex flex-col p-4">
-            <p className="text-center font-semibold text-sm">Área de administração</p>
+            <p className="text-center font-bold text-sm">Área de administração</p>
             <p className="text-center text-sm">Plataforma de Monitorização Epidemiológica</p>
             <div className="flex flex-col mt-6">
               <Form form={form} layout="vertical" onFinish={submit}>

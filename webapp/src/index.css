@@ -93,9 +93,28 @@ textarea,
   font-size: 14px !important;
 }
 
+input,
+select,
 .ant-picker,
-select {
-  min-height: 40px !important;
+.ant-form-item,
+.ant-form-item-row,
+.ant-radio-wrapper {
+  min-height: 40px;
+  align-items: center;
+}
+
+.ant-form-item-row {
+  width: 100% !important;
+}
+
+.ant-form-item-control {
+  justify-content: center;
+  /* align-items: center; */
+  display: flex;
+}
+
+.ant-picker input {
+  min-height: unset !important;
 }
 
 .ant-radio-button-wrapper,
@@ -103,19 +122,19 @@ select {
   font-size: 14px !important;
 }
 
-/* EREFS */
-
-.erefs,
-.erefs .ant-form-item-row,
-.erefs .ant-form-item-control,
-.erefs .ant-form-item-control-input,
-.erefs .ant-form-item-control-input-content,
-.erefs .ant-radio-group,
-.erefs .ant-radio-button-wrapper.img {
-  height: 100%;
+.ant-form-item-row {
+  align-items: flex-start;
+  justify-content: center;
 }
 
-/* PATIENT */
+.ant-form-item-horizontal {
+  display: flex;
+}
+
+.ant-form-item-horizontal .ant-form-item-row {
+  align-items: center;
+  display: flex;
+}
 
 .ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
   padding-left: 0 !important;
@@ -172,7 +191,7 @@ label::after {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  row-gap: 8px;
+  row-gap: 2px;
 }
 
 #alcohol_habits .ant-radio-wrapper {
@@ -183,7 +202,7 @@ label::after {
 .ant-form-item-vertical .ant-radio-group {
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+  row-gap: 2px;
 }
 
 #charlson-index .ant-radio-group:not(#age, #diabetes_mellitus, #liver_disease, #solid_tumor) {
@@ -205,8 +224,13 @@ label::after {
   padding: 0 !important;
 }
 
-.number-button {
-  min-width: 40px;
+#stage_diagnosis_type .ant-radio-label,
+#stage_diagnosis_type .ant-radio-label .ant-input-number {
+  width: 100%;
+}
+
+#stage_diagnosis_type label {
+  margin-inline-end: 0 !important;
 }
 
 @import "tailwindcss";
