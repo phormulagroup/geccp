@@ -91,7 +91,6 @@ export default function PersonalInformation({ data, next, previous }) {
               <Form.Item name="smoking_habits" label="Hábitos tabágicos" layout="horizontal" className="mb-0! smoking_habits">
                 <Radio.Group
                   size="large"
-                  name="radiogroup"
                   defaultValue={1}
                   options={[
                     { value: "Fumador ativo", label: "Fumador ativo" },
@@ -178,7 +177,6 @@ export default function PersonalInformation({ data, next, previous }) {
                 <Radio.Group
                   size="large"
                   vertical
-                  name="radiogroup"
                   options={[
                     { value: 0, label: "Nunca" },
                     { value: 1, label: "Uma vez por mês ou menos" },
@@ -201,7 +199,6 @@ export default function PersonalInformation({ data, next, previous }) {
                       <Radio.Group
                         vertical
                         size="large"
-                        name="radiogroup"
                         options={[
                           { value: 0, label: "Uma ou duas" },
                           { value: 1, label: "Três ou quatro" },
@@ -227,7 +224,6 @@ export default function PersonalInformation({ data, next, previous }) {
                       <Radio.Group
                         vertical
                         size="large"
-                        name="radiogroup"
                         options={[
                           { value: 0, label: "Nunca" },
                           { value: 1, label: "Uma vez por mês ou menos" },

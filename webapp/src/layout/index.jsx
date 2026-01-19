@@ -100,7 +100,7 @@ const Main = () => {
               <Avatar className="w-12.5 h-12.5 mr-2" src={`${config.server_ip}/media/${user.img ?? "User-default.svg"}`} />
               <div className="flex flex-col">
                 <p className="text-[#0c3c61]">Olá,</p>
-                <p className="text-[#0c3c61]">{user["PESSOA"]}</p>
+                <p className="text-[#0c3c61]">{user.name}</p>
               </div>
             </div>
             <div className="flex flex-col justify-start items-center p-5">

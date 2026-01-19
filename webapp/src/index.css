@@ -93,12 +93,13 @@ textarea,
   font-size: 14px !important;
 }
 
-input,
+input:not(#password),
 select,
 .ant-picker,
 .ant-form-item,
 .ant-form-item-row,
-.ant-radio-wrapper {
+.ant-radio-wrapper,
+.ant-input-password {
   min-height: 40px;
   align-items: center;
 }

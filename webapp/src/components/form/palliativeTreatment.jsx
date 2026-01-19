@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Radio, Select, Switch, TimePicker } from "antd";
+import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Radio, Select, Switch, TimePicker, Tooltip } from "antd";
 import dayjs from "dayjs";
-import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePlusCircle } from "react-icons/ai";
 
 import helpers from "../../utils/helpers";
 import CharlsonIndex from "../charlsonIndex";
 
 export default function PalliativeTreatment({ form, next, previous }) {
-  useEffect(() => {
-    console.log("wat");
-    console.log(form);
-  }, []);
-
   return (
     <div className="border-dashed border-2 border-[#8BD1C6] p-10 rounded-[10px] grid grid-cols-4 gap-x-12 gap-y-4 mt-4">
       <div className="col-span-4">
@@ -69,23 +64,31 @@ export default function PalliativeTreatment({ form, next, previous }) {
       </div>
 
       {/* ECOG-PS no início do tratamento */}
-      <div className="col-span-4 mt-6">
-        <p className="font-bold">ECOG-PS no início do tratamento</p>
-      </div>
-      <div className="col-span-4">
-        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
-      </div>
-      <div className="col-span-4">
-        <Form.Item name="palliative_treatment_reason" className="mb-0!" layout="horizontal">
-          <Radio.Group className="flex w-full!" size="large">
-            <Radio value="0">0</Radio>
-            <Radio value="1">1</Radio>
-            <Radio value="2">2</Radio>
-            <Radio value="3">3</Radio>
-            <Radio value="4">4</Radio>
-          </Radio.Group>
-        </Form.Item>
-      </div>
+      <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.palliative_treatment !== currentValues.palliative_treatment}>
+        {({ getFieldValue }) =>
+          getFieldValue("palliative_treatment") === "Primeira linha" && (
+            <>
+              <div className="col-span-4 mt-6">
+                <p className="font-bold">ECOG-PS no início do tratamento</p>
+              </div>
+              <div className="col-span-4">
+                <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+              </div>
+              <div className="col-span-4">
+                <Form.Item name="palliative_treatment_reason" className="mb-0!" layout="horizontal">
+                  <Radio.Group className="flex w-full!" size="large">
+                    <Radio value="0">0</Radio>
+                    <Radio value="1">1</Radio>
+                    <Radio value="2">2</Radio>
+                    <Radio value="3">3</Radio>
+                    <Radio value="4">4</Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </div>
+            </>
+          )
+        }
+      </Form.Item>
 
       {/* Sinais / Sintomas */}
       <div className="col-span-4 mt-6">
@@ -124,7 +127,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
                       <Radio value="Altamente sintomático">Altamente sintomático</Radio>
                     </Radio.Group>
                   </Form.Item>
-                  <p className="mt-[24px] pb-[8px]">Especifique</p>
+                  <p className="mt-6 pb-2">Especifique</p>
                   <Form.Item name="palliative_treatment_symptoms_details_specify" className="mb-0!">
                     <Input size="large" className="w-full" />
                   </Form.Item>
@@ -213,7 +216,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
             >
               {({ getFieldValue }) =>
                 getFieldValue("palliative_treatment_symptoms_details") === "Ensaio clínico" && (
-                  <Form.Item name="palliative_treatment_symptoms_details_clinical_trial" className="mb-0! mt-[12px]!">
+                  <Form.Item name="palliative_treatment_symptoms_details_clinical_trial" className="mb-0! mt-3!">
                     <Input size="large" className="w-full" placeholder="Qual?" />
                   </Form.Item>
                 )
@@ -233,7 +236,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
             >
               {({ getFieldValue }) =>
                 getFieldValue("palliative_treatment_symptoms_details") === "Outro" && (
-                  <Form.Item name="palliative_treatment_symptoms_details_other" className="mb-0! mt-[12px]!">
+                  <Form.Item name="palliative_treatment_symptoms_details_other" className="mb-0! mt-3!">
                     <Input size="large" className="w-full" placeholder="Qual?" />
                   </Form.Item>
                 )
@@ -251,7 +254,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
         <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
       </div>
       <div className="col-span-4">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <Form.Item name="first_administration_treatment_date" className="mb-0!">
             <DatePicker size="large" className="w-full" />
           </Form.Item>
@@ -297,7 +300,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
             >
               {({ getFieldValue }) =>
                 getFieldValue("serious_adverse_events_adjust_discontinuation") === "Outro" && (
-                  <Form.Item name="serious_adverse_events_adjust_discontinuation_other" className="mb-0! mt-[12px]!">
+                  <Form.Item name="serious_adverse_events_adjust_discontinuation_other" className="mb-0! mt-3!">
                     <Input size="large" className="w-full" placeholder="Qual?" />
                   </Form.Item>
                 )
@@ -335,7 +338,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
       <div className="col-span-4 mt-4">
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <p className="font-bold pb-[8px]">Data do diagnóstico:</p>
+            <p className="font-bold pb-2">Data do diagnóstico:</p>
             <Form.Item name="diagnostic_date" className="mb-0!">
               <DatePicker size="large" className="w-full" />
             </Form.Item>
@@ -347,7 +350,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
       <div className="col-span-4 mt-4">
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <p className="font-bold pb-[8px]">Ciclo de tratamento:</p>
+            <p className="font-bold pb-2">Ciclo de tratamento:</p>
             <Form.Item name="first_administration_treatment_date" className="mb-0!">
               <InputNumber size="large" className="w-full!" placeholder="0" />
             </Form.Item>
@@ -381,15 +384,15 @@ export default function PalliativeTreatment({ form, next, previous }) {
                       <div>
                         {fields.map((field) => (
                           <div className="border-2 border-dashed border-[#8BD1C6] p-4 rounded-[10px] mt-4 mb-6 relative">
-                            <p className="pb-[8px] text-[12px]">Fármaco(s) que foi(oram) suspenso(s):</p>
+                            <p className="pb-2 text-[12px]">Fármaco(s) que foi(oram) suspenso(s):</p>
                             <Form.Item name={[field.name, "need_treatment_adjustment_temporary_drugs"]} className="mb-0! w-full!">
                               <Input size="large" className="w-full!" />
                             </Form.Item>
-                            <p className="pb-[8px] text-[12px] mt-4">Período de suspensão temporária:</p>
+                            <p className="pb-2 text-[12px] mt-4">Período de suspensão temporária:</p>
                             <Form.Item name={[field.name, "need_treatment_adjustment_temporary_days"]} className="mb-0! w-full!">
                               <InputNumber size="large" className="w-full!" suffix="Dias" />
                             </Form.Item>
-                            <Button icon={<AiOutlineDelete />} className="absolute! top-[-18px] right-[-10px]" onClick={() => remove(field.name)}></Button>
+                            <Button icon={<AiOutlineDelete />} className="absolute! -top-4.5 -right-2.5" onClick={() => remove(field.name)}></Button>
                           </div>
                         ))}
 
@@ -427,15 +430,15 @@ export default function PalliativeTreatment({ form, next, previous }) {
                       <div>
                         {fields.map((field) => (
                           <div className="border-2 border-dashed border-[#8BD1C6] p-4 rounded-[10px] mt-4 mb-6 relative">
-                            <p className="pb-[8px] text-[12px]">Fármaco(s) que foi(oram) suspenso(s):</p>
+                            <p className="pb-2 text-[12px]">Fármaco(s) que foi(oram) suspenso(s):</p>
                             <Form.Item name={[field.name, "need_treatment_adjustment_discontinuation_drugs"]} className="mb-0! w-full!">
                               <Input size="large" className="w-full!" />
                             </Form.Item>
-                            <p className="pb-[8px] text-[12px] mt-4">Período de suspensão temporária:</p>
+                            <p className="pb-2 text-[12px] mt-4">Período de suspensão temporária:</p>
                             <Form.Item name={[field.name, "need_treatment_adjustment_discontinuation_days"]} className="mb-0! w-full!">
                               <InputNumber size="large" className="w-full!" suffix="Dias" />
                             </Form.Item>
-                            <Button icon={<AiOutlineDelete />} className="absolute! top-[-18px] right-[-10px]" onClick={() => remove(field.name)}></Button>
+                            <Button icon={<AiOutlineDelete />} className="absolute! -top-4.5 -right-2.5" onClick={() => remove(field.name)}></Button>
                           </div>
                         ))}
                         {getFieldValue("need_treatment_adjustment") === "Descontinuação definitiva" ? (
@@ -472,15 +475,15 @@ export default function PalliativeTreatment({ form, next, previous }) {
                       <div>
                         {fields.map((field) => (
                           <div className="border-2 border-dashed border-[#8BD1C6] p-4 rounded-[10px] mt-4 mb-6 relative">
-                            <p className="pb-[8px] text-[12px]">Fármaco(s) que foi(oram) suspenso(s):</p>
+                            <p className="pb-2 text-[12px]">Fármaco(s) que foi(oram) suspenso(s):</p>
                             <Form.Item name={[field.name, "need_treatment_adjustment_reduction_drugs"]} className="mb-0! w-full!">
                               <Input size="large" className="w-full!" />
                             </Form.Item>
-                            <p className="pb-[8px] text-[12px] mt-4">Período de suspensão temporária:</p>
+                            <p className="pb-2 text-[12px] mt-4">Período de suspensão temporária:</p>
                             <Form.Item name={[field.name, "need_treatment_adjustment_reduction_days"]} className="mb-0! w-full!">
                               <InputNumber size="large" className="w-full!" suffix="Dias" />
                             </Form.Item>
-                            <Button icon={<AiOutlineDelete />} className="absolute! top-[-18px] right-[-10px]" onClick={() => remove(field.name)}></Button>
+                            <Button icon={<AiOutlineDelete />} className="absolute! -top-4.5 -right-2.5" onClick={() => remove(field.name)}></Button>
                           </div>
                         ))}
 
@@ -531,13 +534,13 @@ export default function PalliativeTreatment({ form, next, previous }) {
                 {fields.map((field) => (
                   <>
                     <div>
-                      <p className="pb-[8px] font-bold">{field.name}º Ciclo de imunoterapia</p>
+                      <p className="pb-2 font-bold">{field.name}º Ciclo de imunoterapia</p>
                       <Form.Item name={[field.name, "date"]} className="mb-0! w-full!">
                         <DatePicker size="large" className="w-full!" />
                       </Form.Item>
                     </div>
                     <div>
-                      <p className="pb-[8px] font-bold">Hora de ínicio</p>
+                      <p className="pb-2 font-bold">Hora de ínicio</p>
                       <Form.Item name={[field.name, "time"]} className="mb-0! w-full!">
                         <TimePicker size="large" className="w-full!" />
                       </Form.Item>
@@ -592,7 +595,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
             <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.serious_adverse_events_immunotherapy !== currentValues.serious_adverse_events_immunotherapy}>
               {({ getFieldValue }) =>
                 getFieldValue("serious_adverse_events_immunotherapy_reason") === "Outra toxicidade imuno-mediada" && (
-                  <Form.Item name="serious_adverse_events_immunotherapy_reason_other" className="mb-0! mt-[12px]!">
+                  <Form.Item name="serious_adverse_events_immunotherapy_reason_other" className="mb-0! mt-3!">
                     <Input size="large" className="w-full" placeholder="Qual?" />
                   </Form.Item>
                 )
@@ -630,7 +633,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
       <div className="col-span-4 mt-4">
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <p className="font-bold pb-[8px]">Data do diagnóstico:</p>
+            <p className="font-bold pb-2">Data do diagnóstico:</p>
             <Form.Item name="serious_adverse_events_immunotherapy_date" className="mb-0!">
               <DatePicker size="large" className="w-full" />
             </Form.Item>
@@ -642,7 +645,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
       <div className="col-span-4 mt-4">
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <p className="font-bold pb-[8px]">Ciclo de tratamento:</p>
+            <p className="font-bold pb-2">Ciclo de tratamento:</p>
             <Form.Item name="serious_adverse_events_immunotherapy_treatment_cycle" className="mb-0!">
               <InputNumber size="large" className="w-full!" placeholder="0" />
             </Form.Item>
@@ -652,7 +655,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
 
       {/* Internamento */}
       <div className="col-span-4 mt-4">
-        <p className="font-bold pb-[8px]">Internamento:</p>
+        <p className="font-bold pb-2">Internamento:</p>
         <Form.Item name="serious_adverse_events_immunotherapy_hospitalization" className="mb-0!" layout="horizontal">
           <Radio.Group className="flex w-full!" size="large">
             <Radio value="Sim">Sim</Radio>
@@ -663,7 +666,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
 
       {/* Necessidade de corticoterapia */}
       <div className="col-span-4 mt-4">
-        <p className="font-bold pb-[8px]">Necessidade de corticoterapia:</p>
+        <p className="font-bold pb-2">Necessidade de corticoterapia:</p>
         <Form.Item name="serious_adverse_events_immunotherapy_corticosteroid_therapy" className="mb-0!" layout="horizontal">
           <Radio.Group className="flex w-full!" size="large">
             <Radio value="Sim">Sim</Radio>
@@ -674,7 +677,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
 
       {/* Necessidade de ajuste do tratamento */}
       <div className="col-span-4 mt-4">
-        <p className="font-bold pb-[8px]">Necessidade de ajuste do tratamento:</p>
+        <p className="font-bold pb-2">Necessidade de ajuste do tratamento:</p>
         <Form.Item name="serious_adverse_events_immunotherapy_treatment_adjustment" className="mb-0!" layout="horizontal">
           <Radio.Group className="flex w-full!" size="large">
             <Radio value="Sim">Sim</Radio>
@@ -705,7 +708,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
                   {getFieldValue("serious_adverse_events_immunotherapy_treatment_adjustment_solution") === "Suspensão temporária da imunoterapia" && (
                     <>
                       <p className="pb-2 mt-4">Período de suspensão temporária:</p>
-                      <Form.Item name="serious_adverse_events_immunotherapy_treatment_adjustment_temporary_suspension_days" className="mb-0! max-w-[300px]">
+                      <Form.Item name="serious_adverse_events_immunotherapy_treatment_adjustment_temporary_suspension_days" className="mb-0! max-w-75">
                         <InputNumber size="large" className="w-full!" suffix="Dias" />
                       </Form.Item>
                     </>
@@ -752,7 +755,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
         <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
       </div>
       <div className="col-span-4">
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-3 gap-4">
           <Form.Item name="treatment_line_ending_date">
             <DatePicker className="w-full" />
           </Form.Item>
@@ -893,7 +896,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
         <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
       </div>
       <div className="col-span-4">
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-3 gap-4">
           <Form.Item name="complete_cycles_administrated_treatment">
             <InputNumber className="w-full!" placeholder="0" />
           </Form.Item>
@@ -909,7 +912,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
       </div>
       <div className="col-span-4">
         <div className="grid grid-cols-2">
-          <Form.Item name="better_repsonse_imagiologic" className="mb-0!">
+          <Form.Item name="better_response_imagiologic" className="mb-0!">
             <Radio.Group className="flex w-full!" size="large">
               <Radio value="Resposta completa">Resposta completa</Radio>
               <Radio value="Resposta parcial">Resposta parcial</Radio>
@@ -918,9 +921,9 @@ export default function PalliativeTreatment({ form, next, previous }) {
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.better_repsonse_imagiologic !== currentValues.better_repsonse_imagiologic}>
+          <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.better_response_imagiologic !== currentValues.better_response_imagiologic}>
             {({ getFieldValue }) =>
-              getFieldValue("better_repsonse_imagiologic") === "Progressão da doença" && (
+              getFieldValue("better_response_imagiologic") === "Progressão da doença" && (
                 <div>
                   <p className="pb-2">Progressão da doença</p>
                   <div className="bg-[#C5E8E3] border-2 border-dashed border-[#8BD1C6] p-4 rounded-[10px]">
@@ -937,6 +940,163 @@ export default function PalliativeTreatment({ form, next, previous }) {
             }
           </Form.Item>
         </div>
+      </div>
+
+      {/* Data da melhor resposta imagiológica */}
+      <div className="col-span-4 mt-6">
+        <p className="font-bold">Data da melhor resposta imagiológica</p>
+      </div>
+      <div className="col-span-4">
+        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+      </div>
+      <div className="col-span-4">
+        <div className="grid grid-cols-3 gap-4">
+          <Form.Item name="best_imagiologic_response_date">
+            <DatePicker className="w-full" />
+          </Form.Item>
+        </div>
+      </div>
+
+      {/* Tempo até resposta clínica */}
+      <div className="col-span-4 mt-6">
+        <p className="font-bold">Tempo até resposta clínica (se doente sintomático aquando do ínicio do tratamento)</p>
+      </div>
+      <div className="col-span-4">
+        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+      </div>
+      <div className="col-span-4">
+        <Form.Item name="time_until_clinic_response" className="mb-0!" layout="horizontal">
+          <Radio.Group className="flex w-full!" size="large">
+            <Radio value="=< 1 mês">{"=< 1 mês"}</Radio>
+            <Radio value="1 - 3 meses">{"1 - 3 meses"}</Radio>
+            <Radio value="> 3 meses">{"> 3 meses"}</Radio>
+            <Radio value="Doente assintomático aquando do início do tratamento">Doente assintomático aquando do início do tratamento</Radio>
+          </Radio.Group>
+        </Form.Item>
+      </div>
+
+      {/* Referenciação a Cuidados Paliativos */}
+      <div className="col-span-4 mt-6">
+        <p className="font-bold">Referenciação a Cuidados Paliativos</p>
+      </div>
+      <div className="col-span-4">
+        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+      </div>
+      <div className="col-span-4">
+        <Form.Item name="palliative_care_referral" layout="horizontal">
+          <Radio.Group className="flex w-full!" size="large">
+            <Radio value="Sim">Sim</Radio>
+            <Radio value="Não">Não</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.palliative_care_referral !== currentValues.palliative_care_referral}>
+          {({ getFieldValue }) =>
+            getFieldValue("palliative_care_referral") === "Sim" && (
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <p className="pb-2">Data da referenciação:</p>
+                  <Form.Item name="palliative_care_referral_date" className="mb-0!" layout="horizontal">
+                    <DatePicker className="w-full" />
+                  </Form.Item>
+                </div>
+              </div>
+            )
+          }
+        </Form.Item>
+      </div>
+
+      {/* Diagnóstico de tumor metácrono */}
+      <div className="col-span-4 mt-6">
+        <p className="font-bold">Diagnóstico de tumor metácrono</p>
+      </div>
+      <div className="col-span-4">
+        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+      </div>
+      <div className="col-span-4">
+        <Form.Item name="diagnosis_metachronous_tumor" layout="horizontal">
+          <Radio.Group className="flex w-full!" size="large">
+            <Radio value="Sim">Sim</Radio>
+            <Radio value="Não">Não</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.diagnosis_metachronous_tumor !== currentValues.diagnosis_metachronous_tumor}>
+          {({ getFieldValue }) =>
+            getFieldValue("diagnosis_metachronous_tumor") === "Sim" && (
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <p className="pb-2">Localização:</p>
+                  <Form.Item name="diagnosis_metachronous_tumor_location" className="mb-0!">
+                    <DatePicker className="w-full" />
+                  </Form.Item>
+                </div>
+                <div>
+                  <div className="flex items-center pb-2">
+                    <p className="mr-1">Data do diagnóstico</p>
+                    <Tooltip placement="topLeft" title={"considerar a data da biópsia"}>
+                      <AiOutlineInfoCircle />
+                    </Tooltip>
+                  </div>
+                  <Form.Item name="diagnosis_metachronous_tumor_date" className="mb-0!" layout="horizontal">
+                    <DatePicker className="w-full" />
+                  </Form.Item>
+                </div>
+              </div>
+            )
+          }
+        </Form.Item>
+      </div>
+
+      {/* Óbito */}
+      <div className="col-span-4 mt-6">
+        <p className="font-bold">Óbito</p>
+      </div>
+      <div className="col-span-4">
+        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+      </div>
+      <div className="col-span-4">
+        <Form.Item name="death" layout="horizontal">
+          <Radio.Group className="flex w-full!" size="large">
+            <Radio value="Sim">Sim</Radio>
+            <Radio value="Não">Não</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.death !== currentValues.death || prevValues.death_cause !== currentValues.death_cause}>
+          {({ getFieldValue }) =>
+            getFieldValue("death") === "Sim" && (
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <p className="pb-2">Data:</p>
+                  <Form.Item name="death_date" className="mb-0!" layout="horizontal">
+                    <DatePicker className="w-full" />
+                  </Form.Item>
+                </div>
+                <div className="col-span-2">
+                  <p className="pb-2">Causa:</p>
+                  <Form.Item name="death_cause" layout="horizontal" className="mb-0!">
+                    <Radio.Group className="flex w-full!" size="large">
+                      <Radio value="Relacionada com a doença oncológica">Relacionada com a doença oncológica</Radio>
+                      <Radio value="Não relacionada com a doença oncológica">Não relacionada com a doença oncológica (especifique se possível)</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                  {getFieldValue("death_cause") === "Não relacionada com a doença oncológica" && (
+                    <Form.Item name="death_cause_text" layout="horizontal" className="mt-6!">
+                      <Input size="large" placeholder="Qual? (Especifique se possível)" />
+                    </Form.Item>
+                  )}
+                  <Form.Item name="death_cause" layout="horizontal">
+                    <Radio.Group className="flex w-full!" size="large">
+                      <Radio value="Desconhecida">Desconhecida</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                </div>
+              </div>
+            )
+          }
+        </Form.Item>
+      </div>
+
+      <div className="col-span-4">
+        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
       </div>
     </div>
   );
