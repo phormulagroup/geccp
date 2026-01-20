@@ -112,7 +112,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -121,7 +121,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+1</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+1</p>
                       </div>
                     ),
                     value: 1,
@@ -140,7 +140,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -149,7 +149,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+1</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+1</p>
                       </div>
                     ),
                     value: 1,
@@ -168,7 +168,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -177,7 +177,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+1</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+1</p>
                       </div>
                     ),
                     value: 1,
@@ -196,7 +196,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -205,7 +205,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+1</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+1</p>
                       </div>
                     ),
                     value: 1,
@@ -224,7 +224,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -233,7 +233,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+1</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+1</p>
                       </div>
                     ),
                     value: 1,
@@ -252,7 +252,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -261,7 +261,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+1</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+1</p>
                       </div>
                     ),
                     value: 1,
@@ -280,7 +280,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -289,7 +289,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+1</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+1</p>
                       </div>
                     ),
                     value: 1,
@@ -308,7 +308,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -317,7 +317,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+1</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+1</p>
                       </div>
                     ),
                     value: 1,
@@ -417,7 +417,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -426,7 +426,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+2</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+2</p>
                       </div>
                     ),
                     value: 2,
@@ -445,7 +445,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -454,7 +454,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+2</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+2</p>
                       </div>
                     ),
                     value: 2,
@@ -510,7 +510,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -519,7 +519,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+2</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+2</p>
                       </div>
                     ),
                     value: 2,
@@ -538,7 +538,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -547,7 +547,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+2</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+2</p>
                       </div>
                     ),
                     value: 2,
@@ -566,7 +566,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Não</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">0</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">0</p>
                       </div>
                     ),
                     value: 0,
@@ -575,7 +575,7 @@ export default function CharlsonIndex({ open, close }) {
                     label: (
                       <div className="flex justify-center items-center">
                         <p>Sim</p>
-                        <p className="text-[10px] absolute right-[15px] top-0 bottom-0">+6</p>
+                        <p className="text-[10px] absolute right-3.75 top-0 bottom-0">+6</p>
                       </div>
                     ),
                     value: 6,

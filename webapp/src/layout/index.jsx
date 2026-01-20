@@ -26,7 +26,7 @@ const Main = () => {
     height: window.innerHeight,
   });
 
-  const [items] = useState([getItem("Dashboard", "/app"), getItem("Patients", "/app/paciente")]);
+  const [items] = useState([getItem("Dashboard", "/app"), getItem("Pacientes", "/app/paciente")]);
 
   const navigate = useNavigate();
 

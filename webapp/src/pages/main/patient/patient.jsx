@@ -55,17 +55,16 @@ export default function Patients() {
     <div>
       <div className="mb-2">
         <div className="flex justify-between">
-          <p className="text-xl font-bold">Patients</p>
+          <p className="text-xl font-bold">Pacientes</p>
           <Button onClick={() => navigate("/app/paciente/adicionar")}>Adicionar paciente</Button>
         </div>
       </div>
       <Table
         columns={[
-          { title: "ID", dataIndex: "ID", key: "ID" },
-          { title: "Local Patient Log", dataIndex: "PROCESS_NUMBER", key: "PROCESS_NUMBER" },
-          { title: "Birth date", dataIndex: "BIRTH_DATE", key: "BIRTH_DATE" },
-          { title: "Acronyms name", dataIndex: "ACRONYMS_NAME", key: "ACRONYMS_NAME" },
-          { title: "", dataIndex: "DETAILS", key: "DETAILS" },
+          { title: "id", dataIndex: "id", key: "id" },
+          { title: "Nº Processo", dataIndex: "process_number", key: "process_number" },
+          { title: "Data de nascimento", dataIndex: "birth_date", key: "birth_date" },
+          { title: "", dataIndex: "details", key: "details" },
         ]}
         dataSource={tableData}
       />

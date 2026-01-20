@@ -9,14 +9,12 @@ import loginBg from "../../assets/login/GECCP-Login.png";
 import logo from "../../assets/login/Cancro-da-cabeca-e-pescoco.svg";
 import logoStudy from "../../assets/login/Grupo-de-Estudos-de-Cancro-da-Cabeca-e-Pescoco.svg";
 import espghan from "../../assets/ESPGHAN.svg";
-import LearnMore from "../../components/learnMore";
 import dayjs from "dayjs";
 import axios from "axios";
 import endpoints from "../../utils/endpoints";
 
 function Login() {
   const { isLoggedIn, login, messageApi } = useContext(Context);
-  const [isOpenLearnMore, setIsOpenLearnMore] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -27,10 +25,6 @@ function Login() {
       navigate("/app");
     }
   }, [isLoggedIn]);
-
-  function closeLearnMore() {
-    setIsOpenLearnMore(false);
-  }
 
   function submit(values) {
     setIsButtonLoading(true);
@@ -55,12 +49,11 @@ function Login() {
 
   return (
     <div className={`flex flex-col justify-between w-full h-full bg-cover bg-center`} style={{ backgroundImage: `url(${loginBg})` }}>
-      <LearnMore open={isOpenLearnMore} close={closeLearnMore} />
-      <div className="flex flex-col justify-center items-center min-h-[500px] w-full">
-        <img src={logo} className="mt-[80px] mb-6" />
-        <div className="max-w-[450px] bg-white rounded-[5px] shadow-[0px_3px_6px_#00000029]">
+      <div className="flex flex-col justify-center items-center min-h-125 w-full">
+        <img src={logo} className="mt-20 mb-6" />
+        <div className="max-w-112.5 bg-white rounded-[5px] shadow-[0px_3px_6px_#00000029]">
           <div className="w-full flex justify-center items-center bg-black p-6 rounded-t-[5px]">
-            <img src={logoStudy} className="w-full max-w-[300px]" />
+            <img src={logoStudy} className="w-full max-w-75" />
           </div>
           <div className="flex flex-col p-4">
             <p className="text-center font-bold text-sm">Área de administração</p>
@@ -99,7 +92,7 @@ function Login() {
           </div>
         </div>
       </div>
-      <Footer className="bg-transparent! max-w-[1600px] w-full mx-auto py-6 px-12">
+      <Footer className="bg-transparent! max-w-400 w-full mx-auto py-6 px-12">
         <div className="flex justify-center items-center mt-6">
           <div>
             <p className="text-xs text-white text-left">Todos os direitos reservados a Phormulagroup © {dayjs().format("YYYY")}</p>

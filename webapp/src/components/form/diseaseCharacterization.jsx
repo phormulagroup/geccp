@@ -6,6 +6,7 @@ import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
 import helpers from "../../utils/helpers";
 import CharlsonIndex from "../charlsonIndex";
 import PalliativeTreatment from "./palliativeTreatment";
+import Relapse from "./relapse";
 
 export default function DiseaseCharacterization({ data, next, previous }) {
   const [isOpenCharlsonIndex, setIsOpenCharlsonIndex] = useState(false);
@@ -451,97 +452,8 @@ export default function DiseaseCharacterization({ data, next, previous }) {
                     </div>
                   ) : (
                     getFieldValue("stage_diagnosis_early") === "Recidiva" && (
-                      <div className="col-span-3">
-                        <div className="border-dashed border-2 border-[#8BD1C6] bg-[#C5E8E3] p-6 rounded-[10px]">
-                          <p className="label">Tratamento da doença localizada / localmente avançada</p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-2">
-                            <div>
-                              <Form.Item noStyle shouldUpdate={(prev, curr) => prev.treatment_localized_disease !== curr.treatment_localized_disease}>
-                                {({ getFieldValue }) => (
-                                  <div
-                                    className={`box-border border-2 border-dashed ${
-                                      getFieldValue("treatment_localized_disease") === "Cirurgia seguida de RT adjuvante"
-                                        ? "border-[#8BD1C6] p-4 mb-4"
-                                        : "border-[#C5E8E3] pl-4 pt-4"
-                                    } rounded-[10px]`}
-                                  >
-                                    <Form.Item name="treatment_localized_disease" className="mb-0!">
-                                      <Radio.Group className="w-full!" size="large">
-                                        <Radio value="Cirurgia seguida de RT adjuvante">Cirurgia seguida de RT adjuvante</Radio>
-                                      </Radio.Group>
-                                    </Form.Item>
-                                    {getFieldValue("treatment_localized_disease") === "Cirurgia seguida de RT adjuvante" ? (
-                                      <div className="pl-4 mt-6">
-                                        <p className="font-bold mb-3">Pembrolizumab peri-operatório:</p>
-                                        <Form.Item name="pembrolizumab" layout="horizontal" className="mb-0!">
-                                          <Radio.Group className="flex w-full!" size="large">
-                                            <Radio value="Sim">Sim</Radio>
-                                            <Radio value="Não">Não</Radio>
-                                          </Radio.Group>
-                                        </Form.Item>
-                                      </div>
-                                    ) : null}
-                                  </div>
-                                )}
-                              </Form.Item>
-                              <div className="pl-4 ml-0.5">
-                                <Form.Item name="treatment_localized_disease">
-                                  <Radio.Group className="w-full!">
-                                    <Radio value="Cirurgia seguida de QRT adjuvante">Cirurgia seguida de QRT adjuvante</Radio>
-                                    <Radio value="Cirurgia apenas">Cirurgia apenas</Radio>
-                                    <Radio value="QRT radical">QRT radical</Radio>
-                                    <Radio value="QT indução seguida de RT">QT indução seguida de RT</Radio>
-                                  </Radio.Group>
-                                </Form.Item>
-                              </div>
-                            </div>
-                            <div className="pt-4">
-                              <Form.Item name="treatment_localized_disease" className="mb-0!">
-                                <Radio.Group>
-                                  <Radio value="QT indução seguida de QRT">QT indução seguida de QRT</Radio>
-                                  <Radio value="QT indução seguida de cirurgia">QT indução seguida de cirurgia</Radio>
-
-                                  {/* ENSAIO CLÍNICO */}
-                                  <Radio value="Ensaio clínico">Ensaio clínico</Radio>
-                                </Radio.Group>
-                              </Form.Item>
-
-                              <Form.Item noStyle shouldUpdate={(prev, curr) => prev.treatment_localized_disease !== curr.treatment_localized_disease}>
-                                {({ getFieldValue }) =>
-                                  getFieldValue("treatment_localized_disease") === "Ensaio clínico" && (
-                                    <Form.Item name="clinical_trial_name" className="w-full pl-7.5!">
-                                      <Input size="large" className="w-full" placeholder="Qual?" />
-                                    </Form.Item>
-                                  )
-                                }
-                              </Form.Item>
-
-                              <Form.Item name="treatment_localized_disease" className="mb-3!">
-                                <Radio.Group>
-                                  <Radio value="Tratamento paliativo">Tratamento paliativo</Radio>
-                                  <Radio value="Outro">Outro</Radio>
-                                </Radio.Group>
-                              </Form.Item>
-
-                              <Form.Item noStyle shouldUpdate={(prev, curr) => prev.treatment_localized_disease !== curr.treatment_localized_disease}>
-                                {({ getFieldValue }) =>
-                                  getFieldValue("treatment_localized_disease") === "Outro" && (
-                                    <Form.Item name="treatment_localized_disease_other" className="w-full pl-7.5!">
-                                      <Input size="large" className="w-full" placeholder="Qual?" />
-                                    </Form.Item>
-                                  )
-                                }
-                              </Form.Item>
-                            </div>
-                          </div>
-
-                          <div className="border-2 border-dashed border-[#8BD1C6] rounded-[10px] p-4">
-                            <p className="font-bold">Data de término do tratamento radical da doença localizada / localmente avançada</p>
-                            <Form.Item name="treatment_end_date" className="mt-4! mb-0!">
-                              <DatePicker size="large" className="w-full" format="DD/MM/YYYY" placeholder="Selecioe a data de término" />
-                            </Form.Item>
-                          </div>
-                        </div>
+                      <div className="col-span-4">
+                        <Relapse form={form} />
                       </div>
                     )
                   )
