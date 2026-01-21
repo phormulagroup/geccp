@@ -26,7 +26,7 @@ export default function PersonalInformation({ data, next, previous }) {
     <div>
       <CharlsonIndex open={isOpenCharlsonIndex} close={closeCharlsonIndex} />
       <Form form={form} onFinish={submitForm} layout="vertical">
-        <div className="border-dashed border-2 border-[#8BD1C6] p-10 rounded-[10px] grid grid-cols-3 gap-10 mt-6">
+        <div className="border-dashed border-2 border-[#8BD1C6] p-6 rounded-[10px] grid grid-cols-3 gap-10 mt-6">
           <Form.Item name="birth_date" label="Data de nascimento" className="mb-0!">
             <DatePicker className="w-full" />
           </Form.Item>
@@ -91,7 +91,6 @@ export default function PersonalInformation({ data, next, previous }) {
               <Form.Item name="smoking_habits" label="Hábitos tabágicos" layout="horizontal" className="mb-0! smoking_habits">
                 <Radio.Group
                   size="large"
-                  defaultValue={1}
                   options={[
                     { value: "Fumador ativo", label: "Fumador ativo" },
                     {

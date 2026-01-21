@@ -8,7 +8,7 @@ import CharlsonIndex from "../charlsonIndex";
 
 export default function PalliativeTreatment({ form, next, previous }) {
   return (
-    <div className="border-dashed border-2 border-[#8BD1C6] p-10 rounded-[10px] grid grid-cols-4 gap-x-12 gap-y-4 mt-4">
+    <div className="border-dashed border-2 border-[#8BD1C6] p-6 rounded-[10px] grid grid-cols-4 gap-x-12 gap-y-4 mt-4">
       <div className="col-span-4">
         <p className="label">Tratamento paliativo</p>
       </div>
@@ -1097,6 +1097,11 @@ export default function PalliativeTreatment({ form, next, previous }) {
 
       <div className="col-span-4">
         <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+      </div>
+      <div className="col-span-4">
+        <Button type="primary" size="large" icon={<AiOutlinePlusCircle />}>
+          Nova linha de tratamento
+        </Button>
       </div>
     </div>
   );
