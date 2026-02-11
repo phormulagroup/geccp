@@ -310,11 +310,11 @@ export default function PalliativeTreatment({ form, next, previous }) {
         </div>
       </div>
 
-      {/* Grau de acordo com o CTCAE v.5: */}
+      {/* Grau de acordo com o CTCAE v.6: */}
       <div className="col-span-4 mt-4">
         <div className="grid grid-cols-2 border-2 border-dashed border-[#8BD1C6] rounded-[10px]">
           <div className="p-4 border-r-2 border-r-[#8BD1C6] border-dashed bg-[#C5E8E3]">
-            <p className="font-bold">Grau de acordo com o CTCAE v.5</p>
+            <p className="font-bold">Grau de acordo com o CTCAE v.6</p>
           </div>
           <div className="p-4 grid grid-cols-2 gap-4">
             <Form.Item name="serious_adverse_events_adjust_discontinuation_grade" className="mb-0!">
@@ -604,11 +604,11 @@ export default function PalliativeTreatment({ form, next, previous }) {
           </div>
         </div>
 
-        {/* Grau de acordo com o CTCAE v.5: */}
+        {/* Grau de acordo com o CTCAE v.6: */}
         <div className="col-span-4 mt-6">
           <div className="grid grid-cols-2 border-2 border-dashed border-[#8BD1C6] rounded-[10px]">
             <div className="p-4 border-r-2 border-r-[#8BD1C6] border-dashed bg-[#C5E8E3]">
-              <p className="font-bold">Grau de acordo com o CTCAE v.5</p>
+              <p className="font-bold">Grau de acordo com o CTCAE v.6</p>
             </div>
             <div className="p-4 grid grid-cols-2 gap-4">
               <Form.Item name="serious_adverse_events_immunotherapy_grade" className="mb-0!">

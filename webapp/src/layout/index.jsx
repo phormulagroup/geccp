@@ -3,7 +3,7 @@ import { CloseOutlined, DownOutlined, LoginOutlined, MenuOutlined, ProfileOutlin
 import { Avatar, Button, Divider, Drawer, Dropdown, Layout, Menu } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import logo from "../assets/Europeer.svg";
+import logo from "../assets/login/Cancro-da-cabeca-e-pescoco.svg";
 
 import endpoints from "../utils/endpoints";
 import config from "../utils/config";
