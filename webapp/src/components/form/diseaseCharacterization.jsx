@@ -10,6 +10,9 @@ import Relapse from "./relapse";
 
 export default function DiseaseCharacterization({ data, next, previous }) {
   const [isOpenCharlsonIndex, setIsOpenCharlsonIndex] = useState(false);
+  const [initialData] = useState({
+    palliative_treatment: [{}],
+  });
 
   const [form] = Form.useForm();
 
@@ -20,7 +23,7 @@ export default function DiseaseCharacterization({ data, next, previous }) {
 
   return (
     <div>
-      <Form form={form} onFinish={submitForm} layout="vertical">
+      <Form form={form} onFinish={submitForm} layout="vertical" initialValues={initialData}>
         {/* Localização do tumor primário */}
         <div className="border-dashed border-2 border-[#8BD1C6] p-6 rounded-[10px] grid grid-cols-2 gap-x-12 gap-y-4 mt-6">
           <div className="col-span-2">
@@ -70,7 +73,7 @@ export default function DiseaseCharacterization({ data, next, previous }) {
                   getFieldValue("tumor_location") === "Outro" && (
                     <div className="mt-2 w-full">
                       <Form.Item name="tumor_location_other" layout="horizontal" className="mb-0!">
-                        <Input size="large" placeholder="Onde?" className="min-w-[300px]!" />
+                        <Input size="large" placeholder="Onde?" className="min-w-75!" />
                       </Form.Item>
                     </div>
                   )
@@ -184,7 +187,7 @@ export default function DiseaseCharacterization({ data, next, previous }) {
                                   getFieldValue("synchronous_tumors_location") === "Outro" && (
                                     <div className="mt-2 w-full">
                                       <Form.Item name="synchronous_tumors_location_other" layout="horizontal" className="mb-0!">
-                                        <Input size="large" placeholder="Onde?" className="min-w-[300px]!" />
+                                        <Input size="large" placeholder="Onde?" className="min-w-75!" />
                                       </Form.Item>
                                     </div>
                                   )
@@ -197,7 +200,7 @@ export default function DiseaseCharacterization({ data, next, previous }) {
                         getFieldValue("location") === "Outro" && (
                           <div className="w-full">
                             <Form.Item name="synchronous_tumors_location_other" layout="horizontal" className="mb-0!">
-                              <Input size="large" placeholder="Onde?" className="min-w-[300px]!" />
+                              <Input size="large" placeholder="Onde?" className="min-w-75!" />
                             </Form.Item>
                           </div>
                         )
