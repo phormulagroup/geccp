@@ -1,28 +1,43 @@
-import { useState } from "react";
+import { use, useContext, useState } from "react";
 import { Button, Form } from "antd";
 
-import { AiOutlinePlayCircle, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiFillPlusCircle, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlinePlayCircle, AiOutlinePlus, AiOutlinePlusCircle } from "react-icons/ai";
 
 import PersonalInformation from "../../../components/form/personalInformation";
 
 import imgImportCSV from "../../../assets/Via-CSV.svg";
 import imgImportStep from "../../../assets/Step-by-Step.svg";
 import DiseaseCharacterization from "../../../components/form/diseaseCharacterization";
+import { Context } from "../../../utils/context";
 
 export default function Create() {
-  const [options, setOptions] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { messageApi } = useContext(Context);
   const [type, setType] = useState(null);
-  const [isOpenCharlsonIndex, setIsOpenCharlsonIndex] = useState(false);
-  const [steps, setSteps] = useState([{}]);
   const [currentStep, setCurrentStep] = useState(0);
+  const [initialData] = useState({
+    palliative_treatment: [{}],
+    treatment: [{}],
+  });
+
+  const [form] = Form.useForm();
 
   function next() {
-    setCurrentStep(currentStep + 1);
+    if (currentStep < 1) setCurrentStep(currentStep + 1);
+    else {
+      form.submit();
+    }
   }
 
   function previous() {
     setCurrentStep(currentStep - 1);
+  }
+
+  function submitForm(values) {
+    console.log(values);
+    messageApi.open({
+      type: "success",
+      content: `Plataforma está em modo de teste, os dados submetidos não serão guardados.`,
+    });
   }
 
   return (
@@ -68,9 +83,9 @@ export default function Create() {
       </div>
 
       {type === "step" && (
-        <div className="flex-col justify-center items-center w-full mt-6">
-          {currentStep === 0 && (
-            <div className="flex flex-col w-full">
+        <Form form={form} onFinish={submitForm} layout="vertical" initialValues={initialData}>
+          <div className="flex-col justify-center items-center w-full mt-6">
+            <div className={`flex-col w-full ${currentStep === 0 ? "flex" : "hidden"}`}>
               <div className="grid grid-cols-3">
                 <div></div>
                 <div className="flex flex-col justify-center items-center">
@@ -78,36 +93,34 @@ export default function Create() {
                   <p className="text-black font-bold text-[20px] text-center">Dados demográficos e estilo de vida</p>
                 </div>
                 <div className="flex flex-col justify-center items-end">
-                  <Button size="large" type="primary" className="rounded-full!" icon={<AiOutlinePlayCircle />} onClick={next}>
+                  <Button size="large" type="primary" className="rounded-full!" icon={<AiOutlineArrowRight />} onClick={next}>
                     Próximo passo
                   </Button>
                 </div>
               </div>
-              <PersonalInformation next={next} previous={previous} />
+              <PersonalInformation form={form} next={next} previous={previous} />
             </div>
-          )}
-          {currentStep === 1 && (
-            <div className="flex flex-col w-full">
+            <div className={`flex-col w-full ${currentStep === 1 ? "flex" : "hidden"}`}>
               <div className="grid grid-cols-3">
                 <div className="flex flex-col justify-center items-start">
-                  <Button size="large" type="primary" className="rounded-full!" icon={<AiOutlinePlayCircle />} onClick={previous}>
+                  <Button size="large" type="primary" className="rounded-full!" icon={<AiOutlineArrowLeft />} onClick={previous}>
                     Passo anterior
                   </Button>
                 </div>
                 <div className="flex flex-col justify-center items-center">
-                  <p className="text-[#229B7D] font-bold text-[30px]">Caracterização da doença</p>
+                  <p className="text-[#229B7D] font-bold text-[30px] text-center">Caracterização da doença</p>
                   <p className="text-black font-bold text-[20px] text-center">Estadios da doença</p>
                 </div>
                 <div className="flex flex-col justify-center items-end">
-                  <Button size="large" type="primary" className="rounded-full!" icon={<AiOutlinePlayCircle />} onClick={next}>
-                    Próximo passo
+                  <Button size="large" type="primary" className="rounded-full!" icon={<AiOutlinePlus />} onClick={next}>
+                    Criar
                   </Button>
                 </div>
               </div>
-              <DiseaseCharacterization next={next} previous={previous} />
+              <DiseaseCharacterization form={form} next={next} previous={previous} />
             </div>
-          )}
-        </div>
+          </div>
+        </Form>
       )}
     </div>
   );

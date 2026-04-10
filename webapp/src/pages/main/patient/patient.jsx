@@ -14,8 +14,6 @@ export default function Patients() {
   const [tableData, setTableData] = useState([]);
   const [isOpenCreate, setIsOpenCreate] = useState(false);
 
-  const [form] = Form.useForm();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,9 +21,10 @@ export default function Patients() {
   }, []);
 
   function getData() {
+    console.log(user);
     axios
       .get(endpoints.patient.readByInstitution, {
-        params: { instituion: user.institution },
+        params: { id_institution: user.id_institution },
       })
       .then((res) => {
         setData(res.data);

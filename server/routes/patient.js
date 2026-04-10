@@ -28,7 +28,7 @@ router.get("/readByInstitution", async (req, res) => {
   try {
     console.log(req.query);
     const query = util.promisify(db.query).bind(db);
-    const rows = await query("SELECT * FROM patient WHERE institution = ?", req.query.institution);
+    const rows = await query("SELECT * FROM patient WHERE id_institution = ?", req.query.id_institution);
     res.send(rows);
   } catch (e) {
     console.log(e);
