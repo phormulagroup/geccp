@@ -387,7 +387,7 @@ export default function PersonalInformation({ data, next, previous, form }) {
                 getFieldValue("height") >= 0 &&
                 getFieldValue("weight") >= 0 &&
                 helpers.calcIMC(getFieldValue("height"), getFieldValue("weight")) > 0 &&
-                helpers.calcIMC(getFieldValue("height"), getFieldValue("weight")) !== NaN && (
+                !isNaN(helpers.calcIMC(getFieldValue("height"), getFieldValue("weight"))) && (
                   <div className="flex justify-center items-center p-4 mt-4 rounded-[5px] bg-[#8BD1C6]">
                     <div className="flex items-center">
                       <p className="text-[24px]">
