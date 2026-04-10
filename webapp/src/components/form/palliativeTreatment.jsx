@@ -165,63 +165,63 @@ export default function PalliativeTreatment({ form, next, previous }) {
                 <div className="col-span-4">
                   <div className="grid grid-cols-4 gap-4">
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Cetuximab + docetaxel + cisplatina">Cetuximab + docetaxel + cisplatina</Radio>
                         </Radio.Group>
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Pembrolizumab + cisplatina + 5FU">Pembrolizumab + cisplatina + 5FU</Radio>
                         </Radio.Group>
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Paclitaxel + carboplatina">Paclitaxel + carboplatina</Radio>
                         </Radio.Group>
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Cetuximab + paclitaxel">Cetuximab + paclitaxel</Radio>
                         </Radio.Group>
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Cetuximab + docetaxel + carboplatina">Cetuximab + docetaxel + carboplatina</Radio>
                         </Radio.Group>
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Pembrolizumab + carboplatina + 5FU">Pembrolizumab + carboplatina + 5FU</Radio>
                         </Radio.Group>
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Pembrolizumab em monoterapia">Pembrolizumab em monoterapia</Radio>
                         </Radio.Group>
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Metotrexato">Metotrexato</Radio>
                         </Radio.Group>
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Ensaio clínico">Ensaio clínico</Radio>
                         </Radio.Group>
@@ -230,12 +230,12 @@ export default function PalliativeTreatment({ form, next, previous }) {
                       <Form.Item
                         noStyle
                         shouldUpdate={(prevValues, currentValues) =>
-                          prevValues.palliative_treatment[field.name]?.symptoms_details !== currentValues.palliative_treatment[field.name]?.symptoms_details
+                          prevValues.palliative_treatment[field.name]?.treatment_scheme !== currentValues.palliative_treatment[field.name]?.treatment_scheme
                         }
                       >
                         {({ getFieldValue }) =>
-                          getFieldValue("palliative_treatment")[field.name]?.symptoms_details === "Ensaio clínico" && (
-                            <Form.Item name={[field.name, "symptoms_details_clinical_trial"]} className="mb-0! mt-3!">
+                          getFieldValue("palliative_treatment")[field.name]?.treatment_scheme === "Ensaio clínico" && (
+                            <Form.Item name={[field.name, "treatment_scheme_clinical_trial"]} className="mb-0! mt-3!">
                               <Input size="large" className="w-full" placeholder="Qual?" />
                             </Form.Item>
                           )
@@ -243,7 +243,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
                       </Form.Item>
                     </div>
                     <div>
-                      <Form.Item name={[field.name, "symptoms_details"]} className="mb-0!">
+                      <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
                         <Radio.Group className="flex w-full!" size="large">
                           <Radio value="Outro">Outro</Radio>
                         </Radio.Group>
@@ -252,12 +252,12 @@ export default function PalliativeTreatment({ form, next, previous }) {
                       <Form.Item
                         noStyle
                         shouldUpdate={(prevValues, currentValues) =>
-                          prevValues.palliative_treatment[field.name]?.symptoms_details !== currentValues.palliative_treatment[field.name]?.symptoms_details
+                          prevValues.palliative_treatment[field.name]?.treatment_scheme !== currentValues.palliative_treatment[field.name]?.treatment_scheme
                         }
                       >
                         {({ getFieldValue }) =>
-                          getFieldValue("palliative_treatment")[field.name]?.symptoms_details === "Outro" && (
-                            <Form.Item name={[field.name, "symptoms_details_other"]} className="mb-0! mt-3!">
+                          getFieldValue("palliative_treatment")[field.name]?.treatment_scheme === "Outro" && (
+                            <Form.Item name={[field.name, "treatment_scheme_other"]} className="mb-0! mt-3!">
                               <Input size="large" className="w-full" placeholder="Qual?" />
                             </Form.Item>
                           )

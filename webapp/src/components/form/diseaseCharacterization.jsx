@@ -7,11 +7,13 @@ import helpers from "../../utils/helpers";
 import CharlsonIndex from "../charlsonIndex";
 import PalliativeTreatment from "./palliativeTreatment";
 import Relapse from "./relapse";
+import Treatment from "./treatment";
 
 export default function DiseaseCharacterization({ data, next, previous }) {
   const [isOpenCharlsonIndex, setIsOpenCharlsonIndex] = useState(false);
   const [initialData] = useState({
     palliative_treatment: [{}],
+    treatment: [{}],
   });
 
   const [form] = Form.useForm();
@@ -81,6 +83,158 @@ export default function DiseaseCharacterization({ data, next, previous }) {
               </Form.Item>
             </div>
           </div>
+
+          <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.tumor_location !== currentValues.tumor_location}>
+            {({ getFieldValue }) => (
+              <>
+                {getFieldValue("tumor_location") === "Orofaringe" && (
+                  <div className=" col-span-2 p-6 bg-[#C5E8E3] border-[2px] border-dashed border-[#8BD1C6] rounded-[5px] flex gap-x-12">
+                    <div>
+                      <Form.Item name="orofaringe_details" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "HPV +", label: "HPV +" }]} />
+                      </Form.Item>
+                    </div>
+                    <div>
+                      <Form.Item name="orofaringe_details" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "HPV -", label: "HPV -" }]} />
+                      </Form.Item>
+                    </div>
+                    <div>
+                      <Form.Item name="orofaringe_details" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "Desconhecido / não realizado", label: "Desconhecido / não realizado" }]} />
+                      </Form.Item>
+                    </div>
+                  </div>
+                )}
+                {getFieldValue("tumor_location") === "Primário oculto da cabeça e pescoço" && (
+                  <div className=" col-span-2 p-6 bg-[#C5E8E3] border-[2px] border-dashed border-[#8BD1C6] rounded-[5px] flex gap-x-12">
+                    <div>
+                      <Form.Item name="hidden_primary_head_neck" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "EBV +", label: "EBV +" }]} />
+                      </Form.Item>
+                    </div>
+                    <div>
+                      <Form.Item name="hidden_primary_head_neck" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "HPV +", label: "HPV +" }]} />
+                      </Form.Item>
+                    </div>
+                    <div>
+                      <Form.Item name="hidden_primary_head_neck" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "EBV - / HPV -", label: "EBV - / HPV -" }]} />
+                      </Form.Item>
+                    </div>
+                    <div>
+                      <Form.Item name="hidden_primary_head_neck" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "EBV e HPV desconhecido", label: "EBV e HPV desconhecido" }]} />
+                      </Form.Item>
+                    </div>
+                  </div>
+                )}
+                {getFieldValue("tumor_location") === "Nasofaringe" && (
+                  <div className="col-span-2 border-dashed border-2 border-[#8BD1C6] p-6 rounded-[10px] grid grid-cols-4 gap-x-12 gap-y-4 mt-6">
+                    <div className="col-span-4">
+                      <p className="font-bold">Pesquisa de EBER na peça tumoral:</p>
+                    </div>
+                    <div className="col-span-4">
+                      <Divider className="mt-0! mb-0! h-1 bg-[#17A38D]" />
+                    </div>
+                    <div className="col-span-4 flex flex-col">
+                      <Form.Item name="nasofaringe_eber" layout="horizontal" className="mb-0!">
+                        <Radio.Group
+                          size="large"
+                          options={[
+                            { value: "Positivo", label: "Positivo" },
+                            { value: "Negativo", label: "Negativo" },
+                            { value: "Desconhecido", label: "Desconhecido" },
+                          ]}
+                        />
+                      </Form.Item>
+                    </div>
+                    <div className="col-span-4 mt-2">
+                      <p className="font-bold">Pesquisa de HPV na peça tumoral:</p>
+                    </div>
+                    <div className="col-span-4">
+                      <Divider className="mt-0! mb-0! h-1 bg-[#17A38D]" />
+                    </div>
+                    <div className="col-span-4 flex flex-col">
+                      <Form.Item name="nasofaringe_hpv" layout="horizontal" className="mb-0!">
+                        <Radio.Group
+                          size="large"
+                          options={[
+                            { value: "Positivo", label: "Positivo" },
+                            { value: "Negativo", label: "Negativo" },
+                            { value: "Desconhecido", label: "Desconhecido" },
+                          ]}
+                        />
+                      </Form.Item>
+                    </div>
+                    <div className="col-span-4 mt-2">
+                      <p className="font-bold">EBV plasmático baseline</p>
+                    </div>
+                    <div className="col-span-4">
+                      <Divider className="mt-0! mb-0! h-1 bg-[#17A38D]" />
+                    </div>
+                    <div className="col-span-4 flex justify-start items-start gap-x-12">
+                      <Form.Item name="nasofaringe_hpv" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "Desconhecido/não realizado", label: "Desconhecido/não realizado" }]} />
+                      </Form.Item>
+                      <div>
+                        <Form.Item name="nasofaringe_hpv" layout="horizontal" className="mb-0!">
+                          <Radio.Group size="large" options={[{ value: "Doseamento", label: "Doseamento" }]} />
+                        </Form.Item>
+
+                        <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.nasofaringe_hpv !== currentValues.nasofaringe_hpv}>
+                          {({ getFieldValue }) =>
+                            getFieldValue("nasofaringe_hpv") === "Doseamento" && (
+                              <Form.Item name="nasofaringe_hpv_dose" layout="horizontal" className="mb-0! mt-2!">
+                                <InputNumber size="large" className="min-w-[250px]!" />
+                              </Form.Item>
+                            )
+                          }
+                        </Form.Item>
+                      </div>
+                    </div>
+
+                    <div className="col-span-4 mt-2">
+                      <p className="font-bold">Histologia</p>
+                    </div>
+                    <div className="col-span-4">
+                      <Divider className="mt-0! mb-0! h-1 bg-[#17A38D]" />
+                    </div>
+                    <div className="col-span-4 flex justify-start items-start gap-x-12">
+                      <Form.Item name="nasofaringe_histology" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "Carcinoma queratinizante", label: "Carcinoma queratinizante" }]} />
+                      </Form.Item>
+                      <Form.Item name="nasofaringe_histology" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "Carcinoma espinocelular não queratinizante", label: "Carcinoma espinocelular não queratinizante" }]} />
+                      </Form.Item>
+                      <Form.Item name="nasofaringe_histology" layout="horizontal" className="mb-0!">
+                        <Radio.Group size="large" options={[{ value: "Carcinoma espinocelular basaloide", label: "Carcinoma espinocelular basaloide" }]} />
+                      </Form.Item>
+                      <div>
+                        <Form.Item name="nasofaringe_histology" layout="horizontal" className="mb-0!">
+                          <Radio.Group size="large" options={[{ value: "Outro", label: "Outro" }]} />
+                        </Form.Item>
+
+                        <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.nasofaringe_histology !== currentValues.nasofaringe_histology}>
+                          {({ getFieldValue }) =>
+                            getFieldValue("nasofaringe_histology") === "Outro" && (
+                              <Form.Item name="nasofaringe_histology_other_details" layout="horizontal" className="mb-0! mt-2!">
+                                <Input size="large" className="min-w-[250px]!" />
+                              </Form.Item>
+                            )
+                          }
+                        </Form.Item>
+                      </div>
+                    </div>
+                    <div className="col-span-4">
+                      <Treatment form={form} />
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </Form.Item>
         </div>
 
         {/* Histologia */}
@@ -577,6 +731,104 @@ export default function DiseaseCharacterization({ data, next, previous }) {
                       <>
                         <div className="col-span-4">
                           <Divider className="mt-0! mb-0! h-1 bg-[#17A38D]" />
+                        </div>
+                        <div className="col-span-4 flex flex-col w-full gap-x-12 gap-y-4">
+                          <div className="border-dashed border-2 border-[#8BD1C6] bg-[#C5E8E3] rounded-[10px] mt-4">
+                            <div className="p-6 rounded-t-[10px]">
+                              <p className="label">Se diagnóstico em estadio avançado / recidiva com metastização à distância</p>
+                            </div>
+
+                            <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.therapeutic_approach_type !== currentValues.therapeutic_approach_type}>
+                              {({ getFieldValue }) =>
+                                (getFieldValue("therapeutic_approach_type") === "Recidiva com doença locorregional e metastização à distância" ||
+                                  getFieldValue("therapeutic_approach_type") === "Recidiva com metastização à distância apenas") && (
+                                  <div className="p-6 border-t-2 border-dashed border-[#8BD1C6] bg-white rounded-[10px] grid grid-cols-3 gap-x-12 gap-y-4">
+                                    {/* Locais de metastização à distância */}
+                                    <div className="col-span-3 mt-2">
+                                      <p className="font-bold">Locais de metastização à distância</p>
+                                    </div>
+                                    <div className="col-span-3">
+                                      <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+                                    </div>
+                                    <div className="col-span-3 grid grid-cols-5 gap-x-12">
+                                      <div>
+                                        <Form.Item name="distant_metastasis_sites" className="mb-0!">
+                                          <Radio.Group className="flex w-full!" size="large">
+                                            <Radio value="Osso">Osso</Radio>
+                                          </Radio.Group>
+                                        </Form.Item>
+                                      </div>
+                                      <div>
+                                        <Form.Item name="distant_metastasis_sites" className="mb-0!">
+                                          <Radio.Group className="flex w-full!" size="large">
+                                            <Radio value="Pulmão">Pulmão</Radio>
+                                          </Radio.Group>
+                                        </Form.Item>
+                                      </div>
+                                      <div className="col-span-3">
+                                        <Form.Item name="distant_metastasis_sites" className="mb-0!">
+                                          <Radio.Group className="flex w-full!" size="large">
+                                            <Radio value="Fígado">Fígado</Radio>
+                                          </Radio.Group>
+                                        </Form.Item>
+                                      </div>
+                                      <div>
+                                        <Form.Item name="distant_metastasis_sites" className="mb-0!">
+                                          <Radio.Group className="flex w-full!" size="large">
+                                            <Radio value="Sistema nervoso central">Sistema nervoso central</Radio>
+                                          </Radio.Group>
+                                        </Form.Item>
+                                      </div>
+                                      <div>
+                                        <Form.Item name="distant_metastasis_sites" className="mb-0!">
+                                          <Radio.Group className="flex w-full!" size="large">
+                                            <Radio value="Outro">Outro</Radio>
+                                          </Radio.Group>
+                                        </Form.Item>
+
+                                        <Form.Item
+                                          noStyle
+                                          shouldUpdate={(prevValues, currentValues) => prevValues.distant_metastasis_sites !== currentValues.distant_metastasis_sites}
+                                        >
+                                          {({ getFieldValue }) =>
+                                            getFieldValue("distant_metastasis_sites") === "Outro" && (
+                                              <Form.Item name="distant_metastasis_sites_other" className="mb-0! mt-2!">
+                                                <Input size="large" placeholder="Qual?" />
+                                              </Form.Item>
+                                            )
+                                          }
+                                        </Form.Item>
+                                      </div>
+                                    </div>
+
+                                    {/* Número de órgãos envolvidos */}
+                                    <div className="col-span-3 mt-2">
+                                      <p className="font-bold">Número de locais envolvidos</p>
+                                    </div>
+                                    <div className="col-span-3">
+                                      <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
+                                    </div>
+                                    <div className="col-span-3 grid grid-cols-5 gap-x-12">
+                                      <div>
+                                        <Form.Item name="distant_metastasis_sites" className="mb-0!">
+                                          <Radio.Group className="flex w-full!" size="large">
+                                            <Radio value="< 5">{"< 5"}</Radio>
+                                          </Radio.Group>
+                                        </Form.Item>
+                                      </div>
+                                      <div>
+                                        <Form.Item name="distant_metastasis_sites" className="mb-0!">
+                                          <Radio.Group className="flex w-full!" size="large">
+                                            <Radio value=">= 5">{">= 5"}</Radio>
+                                          </Radio.Group>
+                                        </Form.Item>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )
+                              }
+                            </Form.Item>
+                          </div>
                         </div>
                       </>
                     )
