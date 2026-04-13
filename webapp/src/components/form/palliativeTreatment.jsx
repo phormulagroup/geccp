@@ -5,12 +5,19 @@ import { AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePlusCircle } from "react
 
 import helpers from "../../utils/helpers";
 import CharlsonIndex from "../charlsonIndex";
+import { useContext } from "react";
+import { Context } from "../../utils/context";
 
 export default function PalliativeTreatment({ form, next, previous }) {
   const [selectedTreatmentLine, setSelectedTreatmentLine] = useState(1);
+  const { messageApi } = useContext(Context);
   function addTreatmentLine(e) {
     let lines = form.getFieldValue("palliative_treatment");
     form.setFieldValue("palliative_treatment", [...(lines || []), {}]);
+    messageApi.open({
+      type: "success",
+      content: `Foi adicionado uma nova linha de tratamento.`,
+    });
   }
 
   function selectLine(e) {
@@ -1135,7 +1142,7 @@ export default function PalliativeTreatment({ form, next, previous }) {
         <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
       </div>
       <div className="col-span-4">
-        <Button type="primary" size="large" icon={<AiOutlinePlusCircle />}>
+        <Button type="primary" size="large" icon={<AiOutlinePlusCircle />} onClick={addTreatmentLine}>
           Nova linha de tratamento
         </Button>
       </div>
