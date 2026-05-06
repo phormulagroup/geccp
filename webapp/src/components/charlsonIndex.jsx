@@ -344,7 +344,7 @@ export default function CharlsonIndex({ open, close }) {
                   {
                     label: (
                       <div className="flex justify-between">
-                        <p>Suave</p>
+                        <p>Ligeira</p>
                         <p className="text-[10px]">+1</p>
                       </div>
                     ),

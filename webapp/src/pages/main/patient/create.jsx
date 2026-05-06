@@ -15,8 +15,8 @@ export default function Create() {
   const [type, setType] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [initialData] = useState({
-    palliative_treatment: [{}],
     treatment: [{}],
+    palliative_treatment: [{}],
   });
 
   const [form] = Form.useForm();

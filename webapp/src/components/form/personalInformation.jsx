@@ -24,7 +24,7 @@ export default function PersonalInformation({ data, next, previous, form }) {
     <div>
       <CharlsonIndex open={isOpenCharlsonIndex} close={closeCharlsonIndex} />
       <div className="border-dashed border-2 border-[#8BD1C6] p-6 rounded-[10px] grid grid-cols-3 gap-10 mt-6">
-        <Form.Item name="birth_date" label="Data de nascimento" className="mb-0!">
+        <Form.Item name="birth_date" label="Data de nascimento" className="mb-0!" getValueProps={(value) => ({ value: value && dayjs(value) })}>
           <DatePicker className="w-full" />
         </Form.Item>
         <Form.Item name="genre" label="Género" className="mb-0!">
@@ -37,12 +37,50 @@ export default function PersonalInformation({ data, next, previous, form }) {
             ]}
           />
         </Form.Item>
-        <Form.Item name="nationality" label="Nacionalidade" className="mb-0!">
-          <Select size="large" placeholder="Selecionar a nacionalidade" options={[{ value: "Portugal", label: "Portugal" }]} />
-        </Form.Item>
-        <Form.Item name="residence" label="País de residência" className="mb-0!">
-          <Select size="large" placeholder="Selecionar o país de residência nacionalidade" options={[{ value: "Portugal", label: "Portugal" }]} />
-        </Form.Item>
+        <div>
+          <Form.Item name="nationality" label="Nacionalidade" className="mb-0!">
+            <Select
+              size="large"
+              placeholder="Selecionar a nacionalidade"
+              options={[
+                { value: "Portugal", label: "Portugal" },
+                { value: "Outra", label: "Outra" },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.nationality !== currentValues.nationality}>
+            {({ getFieldValue }) =>
+              getFieldValue("nationality") === "Outra" && (
+                <Form.Item name="nationality_specified" className="mb-0! mt-[24px]!">
+                  <Input size="large" placeholder="Qual a nacionalidade?" />
+                </Form.Item>
+              )
+            }
+          </Form.Item>
+        </div>
+        <div>
+          <Form.Item name="residence" label="País de residência" className="mb-0!">
+            <Select
+              size="large"
+              placeholder="Selecionar o país de residência nacionalidade"
+              options={[
+                { value: "Portugal", label: "Portugal" },
+                { value: "Outro", label: "Outro" },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.residence !== currentValues.residence}>
+            {({ getFieldValue }) =>
+              getFieldValue("residence") === "Outro" && (
+                <Form.Item name="residence_specified" className="mb-0! mt-[24px]!">
+                  <Input size="large" placeholder="Qual o país de residência?" />
+                </Form.Item>
+              )
+            }
+          </Form.Item>
+        </div>
         <Form.Item name="marital_status" label="Estado civil" className="mb-0!">
           <Select
             size="large"
@@ -116,28 +154,28 @@ export default function PersonalInformation({ data, next, previous, form }) {
                   </div>
                   <div className="mt-4">
                     <Form.Item name="smoking_date_start" className="mb-0!">
-                      <InputNumber size="large" placeholder="Idade de início do consumo tabágico" className="w-full!" />
+                      <InputNumber min={0} size="large" placeholder="Idade de início do consumo tabágico" className="w-full!" />
                     </Form.Item>
                   </div>
                   <div className="mt-4">
                     {getFieldValue("smoking_habits") === "Fumador ativo" ? (
                       <Form.Item name="smoking_units" className="mb-0!">
-                        <InputNumber size="large" placeholder="Unidades maço ano" className="w-full!" />
+                        <InputNumber min={0} size="large" placeholder="Unidades maço ano" className="w-full!" />
                       </Form.Item>
                     ) : (
                       <Form.Item name="smoking_date_end" className="mb-0!">
-                        <InputNumber size="large" placeholder="Idade de fim do consumo tabágico" className="w-full!" />
+                        <InputNumber min={0} size="large" placeholder="Idade de fim do consumo tabágico" className="w-full!" />
                       </Form.Item>
                     )}
                   </div>
                   <div className="mt-4">
                     {getFieldValue("smoking_habits") === "Fumador ativo" ? (
                       <Form.Item name="smoking_units_day" className="mb-0!">
-                        <InputNumber size="large" placeholder="Número de cigarros por dia que fuma atualmente" className="w-full!" />
+                        <InputNumber min={0} size="large" placeholder="Número de cigarros por dia que fuma atualmente" className="w-full!" />
                       </Form.Item>
                     ) : (
                       <Form.Item name="smoking_units" className="mb-0!">
-                        <InputNumber size="large" placeholder="Unidades maço ano" className="w-full!" />
+                        <InputNumber min={0} size="large" placeholder="Unidades maço ano" className="w-full!" />
                       </Form.Item>
                     )}
                   </div>
@@ -146,19 +184,29 @@ export default function PersonalInformation({ data, next, previous, form }) {
             }
           </Form.Item>
         </div>
-
-        <Form.Item name="housing_situation" label="Situação habitacional" className="mb-0!">
-          <Select
-            size="large"
-            placeholder="Selecionar situação habitacional"
-            options={[
-              { value: "Vive sozinha(o)", label: "Vive sozinha(o)" },
-              { value: "Vive com cônjuge / companheira(o)", label: "Vive com cônjuge / companheira(o)" },
-              { value: "Vive com outros familiares", label: "Vive com outros familiares" },
-              { value: "Outra situação", label: "Outra situação" },
-            ]}
-          />
-        </Form.Item>
+        <div>
+          <Form.Item name="housing_situation" label="Situação habitacional" className="mb-0!">
+            <Select
+              size="large"
+              placeholder="Selecionar situação habitacional"
+              options={[
+                { value: "Vive sozinha(o)", label: "Vive sozinha(o)" },
+                { value: "Vive com cônjuge / companheira(o)", label: "Vive com cônjuge / companheira(o)" },
+                { value: "Vive com outros familiares", label: "Vive com outros familiares" },
+                { value: "Outra situação", label: "Outra situação" },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.housing_situation !== currentValues.housing_situation}>
+            {({ getFieldValue }) =>
+              getFieldValue("housing_situation") === "Outra situação" && (
+                <Form.Item name="housing_situation_specified" className="mb-0! mt-[24px]!">
+                  <InputNumber size="large" placeholder="Qual a situação habitacional?" className="w-full!" />
+                </Form.Item>
+              )
+            }
+          </Form.Item>
+        </div>
 
         <div className="col-span-2 border-dashed border-2 border-[#8BD1C6] p-6 grid grid-cols-2 gap-x-0 gap-y-4 mt-4 rounded-[10px]">
           <div className="col-span-2">
@@ -312,6 +360,7 @@ export default function PersonalInformation({ data, next, previous, form }) {
                               { value: "Dislipidemia", label: "Dislipidemia" },
                               { value: "Doença hepática", label: "Doença hepática" },
                               { value: "Infeção VIH", label: "Infeção VIH" },
+                              { value: "Hepatite", label: "Hepatite" },
                               { value: "Pós-transplante de órgão", label: "Pós-transplante de órgão" },
                               { value: "Outros tumores", label: "Outros tumores" },
                               { value: "Outra(s) comorbilidade(s) relevante(s)", label: "Outra(s) comorbilidade(s) relevante(s)" },
@@ -320,13 +369,23 @@ export default function PersonalInformation({ data, next, previous, form }) {
                         </Form.Item>
                         <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.comorbidities !== currentValues.comorbidities}>
                           {({ getFieldValue }) =>
-                            getFieldValue("comorbidities")[field.name]?.name === "Doença autoimune" && (
+                            getFieldValue("comorbidities")[field.name]?.name === "Doença autoimune" ||
+                            getFieldValue("comorbidities")[field.name]?.name === "Hepatite" ||
+                            getFieldValue("comorbidities")[field.name]?.name === "Pós-transplante de órgão" ||
+                            getFieldValue("comorbidities")[field.name]?.name === "Outros tumores" ||
+                            getFieldValue("comorbidities")[field.name]?.name === "Outra(s) comorbilidade(s) relevante(s)" ? (
                               <div>
                                 <Form.Item name={[field.name, "specidfied"]} className="mb-3! mt-3!">
                                   <Input size="large" placeholder="Especifique" />
                                 </Form.Item>
                               </div>
-                            )
+                            ) : getFieldValue("comorbidities")[field.name]?.name === "Doença hepática" ? (
+                              <div>
+                                <Form.Item name={[field.name, "specidfied"]} className="mb-3! mt-3!">
+                                  <Input size="large" placeholder="Especifique..." />
+                                </Form.Item>
+                              </div>
+                            ) : null
                           }
                         </Form.Item>
                       </div>
