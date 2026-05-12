@@ -69,7 +69,7 @@ export default function Nasofaringe({ data, next, previous, form }) {
               {({ getFieldValue }) =>
                 getFieldValue("nasofaringe_hpv") === "Doseamento" && (
                   <Form.Item name="nasofaringe_hpv_dose" layout="horizontal" className="mb-0! mt-2!">
-                    <InputNumber size="large" className="min-w-[250px]!" />
+                    <InputNumber size="large" className="min-w-62.5!" />
                   </Form.Item>
                 )
               }
@@ -100,7 +100,7 @@ export default function Nasofaringe({ data, next, previous, form }) {
               {({ getFieldValue }) =>
                 getFieldValue("nasofaringe_histology") === "Outro" && (
                   <Form.Item name="nasofaringe_histology_other_details" layout="horizontal" className="mb-0! mt-2!">
-                    <Input size="large" className="min-w-[250px]!" />
+                    <Input size="large" className="min-w-62.5!" />
                   </Form.Item>
                 )
               }
