@@ -266,7 +266,7 @@ export default function Relapse({ form, next, previous }) {
       <Form.Item
         noStyle
         shouldUpdate={(prevValues, currentValues) =>
-          prevValues.therapeutic_approach !== currentValues.therapeutic_approach || prevValues.recidive_treatment !== currentValues.recidive_treatment
+          prevValues.therapeutic_approach !== currentValues.therapeutic_approach || prevValues.recidive_treatment !== currentValues.recidive_treatment || prevValues.tumor_location !== currentValues.tumor_location
         }
       >
         {({ getFieldValue }) =>
@@ -283,6 +283,26 @@ export default function Relapse({ form, next, previous }) {
                   <div className="col-span-3">
                     <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
                   </div>
+                  {getFieldValue("tumor_location") === "Nasofaringe" ? 
+                  
+                  <div className="col-span-3 grid! grid-cols-3 gap-x-12">
+                    <div
+                      className={`border-dashed border-2 border-[#8BD1C6] ${getFieldValue("recidive_treatment") === "Cirurgia seguida de RT adjuvante" ? "border-[#8BD1C6] bg-[#C5E8E3]" : "border-white"} rounded-[10px]`}
+                    >
+                      <Form.Item name="recidive_treatment" layout="horizontal" className="mb-0!">
+                        <Radio.Group className="flex w-full!" size="large">
+                          <Radio value="Cirurgia +/- RT">Cirurgia +/- RT</Radio>
+                          <Radio value="RT radical +/- QT">RT radical +/- QT</Radio>
+                          <Radio value="Outro">Outro</Radio>
+                        </Radio.Group>
+                      </Form.Item>
+                      {getFieldValue("recidive_treatment") === "Outro" && (
+                        <Form.Item name="recidive_treatment_other" layout="horizontal" className="mb-0! mt-2!">
+                          <Input size="large" placeholder="Qual?" />
+                        </Form.Item>
+                      )}
+                    </div>
+                  </div>: 
                   <div className="col-span-3 grid! grid-cols-3 gap-x-12">
                     <div
                       className={`border-dashed border-2 border-[#8BD1C6] ${getFieldValue("recidive_treatment") === "Cirurgia seguida de RT adjuvante" ? "border-[#8BD1C6] bg-[#C5E8E3]" : "border-white"} rounded-[10px] p-4`}
@@ -366,7 +386,7 @@ export default function Relapse({ form, next, previous }) {
                         </Form.Item>
                       )}
                     </div>
-                  </div>
+                  </div>}
 
                   {/* Abordagem terapêutica */}
                   <div className="col-span-3 mt-2">
