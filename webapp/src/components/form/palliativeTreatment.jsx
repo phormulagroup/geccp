@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Radio, Select, Switch, TimePicker, Tooltip } from "antd";
 import dayjs from "dayjs";
 import { AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePlusCircle } from "react-icons/ai";
 
-import helpers from "../../utils/helpers";
 import CharlsonIndex from "../charlsonIndex";
+import TreatmentAdjustmentOption from "./shared/treatmentAdjustmentOption";
+import TreatmentSchemeSelector from "./shared/treatmentSchemeSelector";
+import CtcaeGradeSelector from "./shared/ctcaeGradeSelector";
 
-export default function PalliativeTreatment({ form, next, previous, formKey }) {
+export default function PalliativeTreatment({ form }) {
   const [selectedTreatmentLine, setSelectedTreatmentLine] = useState(1);
 
-  function addTreatmentLine(e) {
+  function addTreatmentLine() {
     let lines = form.getFieldValue("palliative_treatment");
     form.setFieldValue("palliative_treatment", [...(lines || []), {}]);
   }
@@ -28,7 +30,13 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
           <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.palliative_treatment !== currentValues.palliative_treatment}>
             {({ getFieldValue }) => (
               <Radio.Group className="flex w-full!" size="large" onChange={selectLine} defaultValue={selectedTreatmentLine}>
-                {getFieldValue("palliative_treatment") ? getFieldValue("palliative_treatment").map((item, index) => <Radio value={index + 1}>{index + 1}ª linha</Radio>) : null}
+                {getFieldValue("palliative_treatment")
+                  ? getFieldValue("palliative_treatment").map((item, index) => (
+                      <Radio key={index} value={index + 1}>
+                        {index + 1}ª linha
+                      </Radio>
+                    ))
+                  : null}
               </Radio.Group>
             )}
           </Form.Item>
@@ -44,9 +52,9 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
       </div>
       <div className="col-span-4">
         <Form.List name="palliative_treatment">
-          {(fields, { add, remove, move }) =>
+          {(fields) =>
             fields.map((field, fieldInd) => (
-              <div className={`grid-cols-4 gap-x-12 gap-y-4 mt-4 ${selectedTreatmentLine === fieldInd + 1 ? "grid" : "hidden"}`}>
+              <div key={field.key} className={`grid-cols-4 gap-x-12 gap-y-4 mt-4 ${selectedTreatmentLine === fieldInd + 1 ? "grid" : "hidden"}`}>
                 {/* ECOG-PS no início do tratamento */}
 
                 <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.stage_diagnosis_status !== currentValues.stage_diagnosis_status}>
@@ -195,6 +203,14 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                                 <Radio value="Altamente sintomático">Altamente sintomático</Radio>
                               </Radio.Group>
                             </Form.Item>
+                            {getFieldValue("palliative_treatment")[field.name]?.symptoms_details === "Altamente sintomático" && (
+                              <div>
+                                <p className="mt-4 pb-2">Especifique</p>
+                                <Form.Item name={[field.name, "symptoms_details_specify"]}>
+                                  <Input size="large" placeholder="Especifique..." className="w-full" />
+                                </Form.Item>
+                              </div>
+                            )}
                           </div>
                         )}
                       </>
@@ -211,204 +227,25 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                 </div>
                 <div className="col-span-4">
                   {field.name === 0 ? (
-                    <div className="grid grid-cols-4 gap-4">
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Cetuximab + docetaxel + cisplatina">Cetuximab + docetaxel + cisplatina</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Pembrolizumab + cisplatina + 5FU">Pembrolizumab + cisplatina + 5FU</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Paclitaxel + carboplatina">Paclitaxel + carboplatina</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Cetuximab + paclitaxel">Cetuximab + paclitaxel</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Cetuximab + docetaxel + carboplatina">Cetuximab + docetaxel + carboplatina</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Pembrolizumab + carboplatina + 5FU">Pembrolizumab + carboplatina + 5FU</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Pembrolizumab em monoterapia">Pembrolizumab em monoterapia</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Metotrexato">Metotrexato</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Nivolumab">Nivolumab</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Ensaio clínico">Ensaio clínico</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-
-                        <Form.Item
-                          noStyle
-                          shouldUpdate={(prevValues, currentValues) =>
-                            prevValues.palliative_treatment[field.name]?.treatment_scheme !== currentValues.palliative_treatment[field.name]?.treatment_scheme
-                          }
-                        >
-                          {({ getFieldValue }) =>
-                            getFieldValue("palliative_treatment")[field.name]?.treatment_scheme === "Ensaio clínico" && (
-                              <Form.Item name={[field.name, "treatment_scheme_clinical_trial"]} className="mb-0! mt-3!">
-                                <Input size="large" className="w-full" placeholder="Qual?" />
-                              </Form.Item>
-                            )
-                          }
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Outro">Outro</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-
-                        <Form.Item
-                          noStyle
-                          shouldUpdate={(prevValues, currentValues) =>
-                            prevValues.palliative_treatment[field.name]?.treatment_scheme !== currentValues.palliative_treatment[field.name]?.treatment_scheme
-                          }
-                        >
-                          {({ getFieldValue }) =>
-                            getFieldValue("palliative_treatment")[field.name]?.treatment_scheme === "Outro" && (
-                              <Form.Item name={[field.name, "treatment_scheme_other"]} className="mb-0! mt-3!">
-                                <Input size="large" className="w-full" placeholder="Especifique..." />
-                              </Form.Item>
-                            )
-                          }
-                        </Form.Item>
-                      </div>
-                    </div>
+                    <TreatmentSchemeSelector
+                      basePath={[field.name]}
+                      options={[
+                        "Cetuximab + docetaxel + cisplatina",
+                        "Pembrolizumab + cisplatina + 5FU",
+                        "Paclitaxel + carboplatina",
+                        "Cetuximab + paclitaxel",
+                        "Cetuximab + docetaxel + carboplatina",
+                        "Pembrolizumab + carboplatina + 5FU",
+                        "Pembrolizumab em monoterapia",
+                        "Metotrexato",
+                        "Nivolumab",
+                      ]}
+                    />
                   ) : (
-                    <div className="grid grid-cols-4 gap-4">
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Cetuximab + paclitaxel">Cetuximab + paclitaxel</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Paclitaxel + carboplatina">Paclitaxel + carboplatina</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Nivolumab">Nivolumab</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Paclitaxel monoterapia">Paclitaxel monoterapia</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Cetuximab monoterapia">Cetuximab monoterapia</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Metotrexato">Metotrexato</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Ensaio clínico">Ensaio clínico</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-
-                        <Form.Item
-                          noStyle
-                          shouldUpdate={(prevValues, currentValues) =>
-                            prevValues.palliative_treatment[field.name]?.treatment_scheme !== currentValues.palliative_treatment[field.name]?.treatment_scheme
-                          }
-                        >
-                          {({ getFieldValue }) =>
-                            getFieldValue("palliative_treatment")[field.name]?.treatment_scheme === "Ensaio clínico" && (
-                              <Form.Item name={[field.name, "treatment_scheme_clinical_trial"]} className="mb-0! mt-3!">
-                                <Input size="large" className="w-full" placeholder="Qual?" />
-                              </Form.Item>
-                            )
-                          }
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <Form.Item name={[field.name, "treatment_scheme"]} className="mb-0!">
-                          <Radio.Group className="flex w-full!" size="large">
-                            <Radio value="Outro">Outro</Radio>
-                          </Radio.Group>
-                        </Form.Item>
-
-                        <Form.Item
-                          noStyle
-                          shouldUpdate={(prevValues, currentValues) =>
-                            prevValues.palliative_treatment[field.name]?.treatment_scheme !== currentValues.palliative_treatment[field.name]?.treatment_scheme
-                          }
-                        >
-                          {({ getFieldValue }) =>
-                            getFieldValue("palliative_treatment")[field.name]?.treatment_scheme === "Outro" && (
-                              <Form.Item name={[field.name, "treatment_scheme_other"]} className="mb-0! mt-3!">
-                                <Input size="large" className="w-full" placeholder="Especifique..." />
-                              </Form.Item>
-                            )
-                          }
-                        </Form.Item>
-                      </div>
-                    </div>
+                    <TreatmentSchemeSelector
+                      basePath={[field.name]}
+                      options={["Cetuximab + paclitaxel", "Paclitaxel + carboplatina", "Nivolumab", "Paclitaxel monoterapia", "Cetuximab monoterapia", "Metotrexato"]}
+                    />
                   )}
                 </div>
 
@@ -427,9 +264,9 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                   </div>
                 </div>
 
-                {/* Eventos adversos graves que motivaram ajuste de dose ou suspensão do tratamento de quimioterapia ou anti-EGFR. */}
+                {/* Eventos adversos graves que motivaram ajuste de dose ou suspensão do tratamento de tratamento sistémico (exceto imunoterapia) */}
                 <div className="col-span-4 mt-6">
-                  <p className="font-bold">Eventos adversos graves que motivaram ajuste de dose ou suspensão do tratamento de quimioterapia ou anti-EGFR.</p>
+                  <p className="font-bold">Eventos adversos graves que motivaram ajuste de dose ou suspensão do tratamento de tratamento sistémico (exceto imunoterapia)</p>
                 </div>
                 <div className="col-span-4">
                   <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
@@ -446,7 +283,7 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                       <Checkbox value="Mucosite">Mucosite</Checkbox>
                       <Checkbox value="Fadiga">Fadiga</Checkbox>
                       <Checkbox value="Toxicidade hepática">Toxicidade hepática</Checkbox>
-                      <Checkbox value="Toxicidade imuno-mediada">Toxicidade imuno-mediada</Checkbox>
+                      <Checkbox value="Toxicidade imunomediada">Toxicidade imunomediada</Checkbox>
                       <Checkbox value="Ototoxicidade">Ototoxicidade</Checkbox>
                       <Checkbox value="Outro">Outro</Checkbox>
                     </Checkbox.Group>
@@ -461,29 +298,12 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                     {({ getFieldValue }) => (
                       <div className="grid grid-cols-3 gap-6 mt-4">
                         {getFieldValue("palliative_treatment")[field.name]?.serious_adverse_events_adjust_discontinuation?.map((ad) => (
-                          <div className="border-2 border-dashed border-[#8BD1C6] rounded-[10px] p-4">
+                          <div key={ad} className="border-2 border-dashed border-[#8BD1C6] rounded-[10px] p-4">
                             <p className="font-[600] mb-2 text-center">{ad}</p>
                             <Form.Item noStyle={ad !== "Outro"} name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "name"]} className="mb-4!">
                               <Input size="large" className="w-full!" placeholder="Especifique..." hidden={ad !== "Outro"} />
                             </Form.Item>
-                            <div className="p-4 border-r-2 border-r-[#8BD1C6] border-dashed bg-[#C5E8E3]">
-                              <p className="font-bold">Grau de acordo com o CTCAE v.6</p>
-                            </div>
-                            <div className="p-4 grid grid-cols-2 gap-4">
-                              <Form.Item name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "grade"]} className="mb-0!">
-                                <Radio.Group className="flex w-full!" size="large">
-                                  <Radio value="1">1</Radio>
-                                  <Radio value="2">2</Radio>
-                                  <Radio value="3">3</Radio>
-                                </Radio.Group>
-                              </Form.Item>
-                              <Form.Item name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "grade"]} className="mb-0!">
-                                <Radio.Group className="flex w-full!" size="large">
-                                  <Radio value="4">4</Radio>
-                                  <Radio value="5">5</Radio>
-                                </Radio.Group>
-                              </Form.Item>
-                            </div>
+                            <CtcaeGradeSelector name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "grade"]} />
 
                             <p className="font-bold pb-2 mt-4">Data do diagnóstico:</p>
                             <Form.Item
@@ -501,193 +321,36 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
 
                             <p className="font-bold mt-4 pb-[8px]">Necessidade de ajuste do tratamento</p>
 
-                            <Form.Item
-                              noStyle
-                              shouldUpdate={(prevValues, currentValues) =>
-                                prevValues.palliative_treatment[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment !==
-                                currentValues.palliative_treatment[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment
-                              }
-                            >
-                              {({ getFieldValue }) => (
-                                <div>
-                                  <div
-                                    className={`${
-                                      getFieldValue("palliative_treatment")[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment ===
-                                      "Suspensão temporária"
-                                        ? "bg-[#C5E8E3]"
-                                        : "bg-white"
-                                    } border-2 border-dashed border-[#8BD1C6] rounded-[10px] p-4 mb-4`}
-                                  >
-                                    <Form.Item
-                                      name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "need_treatment_adjustment"]}
-                                      className="mb-0! flex items-center"
-                                    >
-                                      <Radio.Group className="flex w-full!" size="large">
-                                        <Radio value="Suspensão temporária">Suspensão temporária</Radio>
-                                      </Radio.Group>
-                                    </Form.Item>
+                            <TreatmentAdjustmentOption
+                              namePath={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad]}
+                              value="Suspensão temporária"
+                              listFieldName="need_treatment_adjustment_temporary"
+                              medicationLabel="Fármaco(s) que foi(oram) suspenso(s):"
+                              secondFieldName="days"
+                              secondFieldLabel="Período de suspensão temporária:"
+                              secondFieldSuffix="Dias"
+                            />
 
-                                    <Form.List name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "need_treatment_adjustment_temporary"]}>
-                                      {(fieldsTreatmentAdjustment, { add, remove, move }) => (
-                                        <div>
-                                          {fieldsTreatmentAdjustment.map((fieldTreatmentAdjustment) => (
-                                            <div className="border-2 border-dashed border-[#8BD1C6] p-4 rounded-[10px] mt-4 mb-6 relative">
-                                              <p className="pb-2 text-[12px]">Fármaco(s) que foi(oram) suspenso(s):</p>
-                                              <Form.Item name={[fieldTreatmentAdjustment.name, "medication"]} className="mb-0! w-full!">
-                                                <Input size="large" className="w-full!" />
-                                              </Form.Item>
-                                              <p className="pb-2 text-[12px] mt-4">Período de suspensão temporária:</p>
-                                              <Form.Item name={[fieldTreatmentAdjustment.name, "days"]} className="mb-0! w-full!">
-                                                <InputNumber size="large" className="w-full!" suffix="Dias" />
-                                              </Form.Item>
-                                              <Button
-                                                icon={<AiOutlineDelete />}
-                                                className="absolute! -top-4.5 -right-2.5"
-                                                onClick={() => remove(fieldTreatmentAdjustment.name)}
-                                              ></Button>
-                                            </div>
-                                          ))}
+                            <TreatmentAdjustmentOption
+                              namePath={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad]}
+                              value="Descontinuação definitiva"
+                              listFieldName="need_treatment_adjustment_discontinuation"
+                              medicationLabel="Fármaco(s) que foi(oram) descontinuado(s):"
+                              secondFieldName="date"
+                              secondFieldLabel="Data da descontinuação:"
+                              secondFieldSuffix="Dias"
+                            />
 
-                                          {getFieldValue("palliative_treatment")[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]
-                                            ?.need_treatment_adjustment === "Suspensão temporária" ? (
-                                            <div className="flex justify-center items-center">
-                                              <Button type="primary" size="large" icon={<AiOutlinePlusCircle />} onClick={() => add()}>
-                                                Adicionar fármaco
-                                              </Button>
-                                            </div>
-                                          ) : null}
-                                        </div>
-                                      )}
-                                    </Form.List>
-                                  </div>
-                                </div>
-                              )}
-                            </Form.Item>
-
-                            <Form.Item
-                              noStyle
-                              shouldUpdate={(prevValues, currentValues) =>
-                                prevValues.palliative_treatment[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment !==
-                                currentValues.palliative_treatment[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment
-                              }
-                            >
-                              {({ getFieldValue }) => (
-                                <div>
-                                  <div
-                                    className={`${
-                                      getFieldValue("palliative_treatment")[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment ===
-                                      "Descontinuação definitiva"
-                                        ? "bg-[#C5E8E3]"
-                                        : "bg-white"
-                                    } border-2 border-dashed border-[#8BD1C6] rounded-[10px] p-4 mb-4`}
-                                  >
-                                    <Form.Item
-                                      name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "need_treatment_adjustment"]}
-                                      className="mb-0! flex items-center"
-                                    >
-                                      <Radio.Group className="flex w-full!" size="large">
-                                        <Radio value="Descontinuação definitiva">Descontinuação definitiva</Radio>
-                                      </Radio.Group>
-                                    </Form.Item>
-
-                                    <Form.List name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "need_treatment_adjustment_discontinuation"]}>
-                                      {(fieldsTreatmentAdjustmentDiscontinuation, { add, remove, move }) => (
-                                        <div>
-                                          {fieldsTreatmentAdjustmentDiscontinuation.map((fieldTreatmentAdjustmentDiscontinuation) => (
-                                            <div className="border-2 border-dashed border-[#8BD1C6] p-4 rounded-[10px] mt-4 mb-6 relative">
-                                              <p className="pb-2 text-[12px]">Fármaco(s) que foi(oram) descontinuado(s):</p>
-                                              <Form.Item name={[fieldTreatmentAdjustmentDiscontinuation.name, "medication"]} className="mb-0! w-full!">
-                                                <Input size="large" className="w-full!" />
-                                              </Form.Item>
-                                              <p className="pb-2 text-[12px] mt-4">Data da descontinuação:</p>
-                                              <Form.Item name={[fieldTreatmentAdjustmentDiscontinuation.name, "date"]} className="mb-0! w-full!">
-                                                <InputNumber size="large" className="w-full!" suffix="Dias" />
-                                              </Form.Item>
-                                              <Button
-                                                icon={<AiOutlineDelete />}
-                                                className="absolute! -top-4.5 -right-2.5"
-                                                onClick={() => remove(fieldTreatmentAdjustmentDiscontinuation.name)}
-                                              ></Button>
-                                            </div>
-                                          ))}
-                                          {getFieldValue("palliative_treatment")[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]
-                                            ?.need_treatment_adjustment === "Descontinuação definitiva" ? (
-                                            <div className="flex justify-center items-center">
-                                              <Button type="primary" size="large" icon={<AiOutlinePlusCircle />} onClick={() => add()}>
-                                                Adicionar fármaco
-                                              </Button>
-                                            </div>
-                                          ) : null}
-                                        </div>
-                                      )}
-                                    </Form.List>
-                                  </div>
-                                </div>
-                              )}
-                            </Form.Item>
-
-                            <Form.Item
-                              noStyle
-                              shouldUpdate={(prevValues, currentValues) =>
-                                prevValues.palliative_treatment[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment !==
-                                currentValues.palliative_treatment[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment
-                              }
-                            >
-                              {({ getFieldValue }) => (
-                                <div>
-                                  <div
-                                    className={`${
-                                      getFieldValue("palliative_treatment")[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]?.need_treatment_adjustment ===
-                                      "Redução de dose"
-                                        ? "bg-[#C5E8E3]"
-                                        : "bg-white"
-                                    } border-2 border-dashed border-[#8BD1C6] rounded-[10px] p-4`}
-                                  >
-                                    <Form.Item
-                                      name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "need_treatment_adjustment"]}
-                                      className="mb-0! flex items-center"
-                                    >
-                                      <Radio.Group className="flex w-full!" size="large">
-                                        <Radio value="Redução de dose">Redução de dose</Radio>
-                                      </Radio.Group>
-                                    </Form.Item>
-
-                                    <Form.List name={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad, "need_treatment_adjustment_reduction"]}>
-                                      {(fieldsTreatmentAdjustmentReduction, { add, remove, move }) => (
-                                        <div>
-                                          {fieldsTreatmentAdjustmentReduction.map((fieldTreatmentAdjustmentReduction) => (
-                                            <div className="border-2 border-dashed border-[#8BD1C6] p-4 rounded-[10px] mt-4 mb-6 relative">
-                                              <p className="pb-2 text-[12px]">Fármaco(s) em que a dose foi reduzida:</p>
-                                              <Form.Item name={[fieldTreatmentAdjustmentReduction.name, "medication"]} className="mb-0! w-full!">
-                                                <Input size="large" className="w-full!" />
-                                              </Form.Item>
-                                              <p className="pb-2 text-[12px] mt-4">Percentagem de redução:</p>
-                                              <Form.Item name={[fieldTreatmentAdjustmentReduction.name, "percentage"]} className="mb-0! w-full!">
-                                                <InputNumber size="large" className="w-full!" suffix="%" />
-                                              </Form.Item>
-                                              <Button
-                                                icon={<AiOutlineDelete />}
-                                                className="absolute! -top-4.5 -right-2.5"
-                                                onClick={() => remove(fieldTreatmentAdjustmentReduction.name)}
-                                              ></Button>
-                                            </div>
-                                          ))}
-
-                                          {getFieldValue("palliative_treatment")[field.name]?.serious_adverse_events_adjust_discontinuation_details?.[ad]
-                                            ?.need_treatment_adjustment === "Redução de dose" ? (
-                                            <div className="flex justify-center items-center">
-                                              <Button type="primary" size="large" icon={<AiOutlinePlusCircle />} onClick={() => add()}>
-                                                Adicionar fármaco
-                                              </Button>
-                                            </div>
-                                          ) : null}
-                                        </div>
-                                      )}
-                                    </Form.List>
-                                  </div>
-                                </div>
-                              )}
-                            </Form.Item>
+                            <TreatmentAdjustmentOption
+                              namePath={[field.name, "serious_adverse_events_adjust_discontinuation_details", ad]}
+                              value="Redução de dose"
+                              listFieldName="need_treatment_adjustment_reduction"
+                              medicationLabel="Fármaco(s) em que a dose foi reduzida:"
+                              secondFieldName="percentage"
+                              secondFieldLabel="Percentagem de redução:"
+                              secondFieldSuffix="%"
+                              withBottomMargin={false}
+                            />
                           </div>
                         ))}
                       </div>
@@ -760,10 +423,10 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                         <div className="col-span-4">
                           <div className="border-2 border-dashed border-[#8BD1C6] p-4 rounded-[10px] mt-2">
                             <Form.List name={[field.name, "time_administration_immunotherapy_cycle"]}>
-                              {(fieldsTimeAdministration, { add, remove, move }) => (
+                              {(fieldsTimeAdministration, { add, remove }) => (
                                 <div className="relative grid grid-cols-3 gap-4">
                                   {fieldsTimeAdministration.map((fieldTimeAdministration) => (
-                                    <>
+                                    <Fragment key={fieldTimeAdministration.key}>
                                       <div>
                                         <p className="pb-2 font-bold">{fieldTimeAdministration.name + 1}º Ciclo de imunoterapia</p>
                                         <Form.Item
@@ -783,7 +446,7 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                                       <div className="flex justify-start items-end">
                                         <Button icon={<AiOutlineDelete />} size="large" onClick={() => remove(fieldTimeAdministration.name)}></Button>
                                       </div>
-                                    </>
+                                    </Fragment>
                                   ))}
 
                                   <div className="col-span-3 flex justify-start items-center">
@@ -813,13 +476,14 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                     <Checkbox.Group className="grid! grid-cols-2!" size="large">
                       <Checkbox value="Pneumonite">Pneumonite</Checkbox>
                       <Checkbox value="Hepatite">Hepatite</Checkbox>
-                      <Checkbox value="Hipotiroidismo">Hipotiroidismo</Checkbox>
                       <Checkbox value="Insuficiência da suprarrenal">Insuficiência da suprarrenal</Checkbox>
                       <Checkbox value="Nefrite">Nefrite</Checkbox>
                       <Checkbox value="Colite">Colite</Checkbox>
                       <Checkbox value="Miocardite">Miocardite</Checkbox>
                       <Checkbox value="Diabetes">Diabetes</Checkbox>
-                      <Checkbox value="Outra toxicidade imuno-mediada">Outra toxicidade imuno-mediada:</Checkbox>
+                      <Checkbox value="Outra toxicidade imunomediada que tenha motivado suspensão ou interrupção do tratamento">
+                        Outra toxicidade imunomediada que tenha motivado suspensão ou interrupção do tratamento:
+                      </Checkbox>
                     </Checkbox.Group>
                   </Form.Item>
 
@@ -833,33 +497,16 @@ export default function PalliativeTreatment({ form, next, previous, formKey }) {
                     {({ getFieldValue }) => (
                       <div className="grid grid-cols-3 gap-6 mt-4">
                         {getFieldValue("palliative_treatment")[field.name]?.serious_adverse_events_immunotherapy_reason?.map((ad) => (
-                          <div className="border-2 border-dashed border-[#8BD1C6] rounded-[10px] p-4">
+                          <div key={ad} className="border-2 border-dashed border-[#8BD1C6] rounded-[10px] p-4">
                             <p className="font-[600] mb-2 text-center">{ad}</p>
                             <Form.Item
-                              noStyle={ad !== "Outra toxicidade imuno-mediada"}
+                              noStyle={ad !== "Outra toxicidade imunomediada que tenha motivado suspensão ou interrupção do tratamento"}
                               name={[field.name, "serious_adverse_events_immunotherapy_reason_details", ad, "name"]}
                               className="mb-4!"
                             >
-                              <Input size="large" className="w-full!" placeholder="Especifique..." hidden={ad !== "Outra toxicidade imuno-mediada"} />
+                              <Input size="large" className="w-full!" placeholder="Especifique..." hidden={ad !== "Outra toxicidade imunomediada que tenha motivado suspensão ou interrupção do tratamento"} />
                             </Form.Item>
-                            <div className="p-4 border-r-2 border-r-[#8BD1C6] border-dashed bg-[#C5E8E3]">
-                              <p className="font-bold">Grau de acordo com o CTCAE v.6</p>
-                            </div>
-                            <div className="p-4 grid grid-cols-2 gap-4">
-                              <Form.Item name={[field.name, "serious_adverse_events_immunotherapy_reason_details", ad, "grade"]} className="mb-0!">
-                                <Radio.Group className="flex w-full!" size="large">
-                                  <Radio value="1">1</Radio>
-                                  <Radio value="2">2</Radio>
-                                  <Radio value="3">3</Radio>
-                                </Radio.Group>
-                              </Form.Item>
-                              <Form.Item name={[field.name, "serious_adverse_events_immunotherapy_reason_details", ad, "grade"]} className="mb-0!">
-                                <Radio.Group className="flex w-full!" size="large">
-                                  <Radio value="4">4</Radio>
-                                  <Radio value="5">5</Radio>
-                                </Radio.Group>
-                              </Form.Item>
-                            </div>
+                            <CtcaeGradeSelector name={[field.name, "serious_adverse_events_immunotherapy_reason_details", ad, "grade"]} />
 
                             <p className="font-bold pb-2 mt-4">Data do diagnóstico:</p>
                             <Form.Item

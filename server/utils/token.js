@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET =
-  "5d592cccc721d4700925442cdwba8de2f2249b7ff3213597axp027cze6e4w3a61b793d3d52142025be68b2b0d471fdb38299d98d0bb490d5ae9d2c26ea73763873bd47a14452769219ekdbb351cb60f603529e9e2f429d6d4452cbee5c75ce3c158902103578230d9d79507715771deb7343e082b59b1fe67d947e0bf2c675073abb957b7beb38c7a35aac480bf7a7802996eb2f045695a339c13769e8dcfd9710335c1f070a34e1903dae2da663915d1c07e13bc8cea73efcaa036b4ba38ef854e20f274939588fb0a377591508c7eb5b5832e484ed9aaeb5565b908f847e038f3c487f12824dfa1b8a9c10a4147f1fb0faf91c68a9f69b228a18d4429725a2";
 
-var privateKey = JWT_SECRET;
+var privateKey = process.env.JWT_SECRET;
 
 module.exports = {
   verifyToken: function (token) {
@@ -30,7 +28,7 @@ module.exports = {
 
   createToken: function (data) {
     return new Promise((resolve, reject) => {
-      jwt.sign(JSON.parse(JSON.stringify(data)), privateKey, { expiresIn: "180d" }, (err, token) => {
+      jwt.sign(JSON.parse(JSON.stringify(data)), privateKey, { expiresIn: "30d" }, (err, token) => {
         if (err) reject(err);
         resolve(token);
       });

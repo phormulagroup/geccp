@@ -1,73 +1,72 @@
 import axios from "axios";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import endpoints from "../../../utils/endpoints";
-import { Context } from "../../../utils/context";
-import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Radio, Select, Table, Tabs } from "antd";
-import dayjs from "dayjs";
+import { Button, Form, Tabs } from "antd";
 import { useParams } from "react-router";
 import PersonalInformation from "../../../components/form/personalInformation";
+import DiseaseCharacterization from "../../../components/form/diseaseCharacterization";
+import { Context } from "../../../utils/appContext";
 
 export default function Details() {
-  const { user } = useContext(Context);
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [options, setOptions] = useState([]);
+  const { update } = useContext(Context);
+  const [data, setData] = useState([]);
 
   const [form] = Form.useForm();
 
   const params = useParams();
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (!params.id) return;
 
-  function getData() {
-    if (params.ID) {
-      axios
-        .get(endpoints.patient.readById, {
-          params: { ID: params.ID },
-        })
-        .then((res) => {
-          setData(res.data);
-          if (res.data.patient.length > 0) {
-            const formObj = {
-              ...res.data.patient[0],
-              BIRTH_DATE_YEAR: parseInt(res.data.patient[0].BIRTH_DATE_YEAR),
-              BIRTH_DATE_MONTH: parseInt(res.data.patient[0].BIRTH_DATE_MONTH),
-              BIRTH_DATE: res.data.patient[0].BIRTH_DATE ? dayjs(res.data.patient[0].BIRTH_DATE) : null,
-            };
-
-            form.setFieldsValue(formObj);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }
+    axios
+      .get(endpoints.patient.readById, {
+        params: { id: params.id },
+      })
+      .then((res) => {
+        setData(res.data);
+        if (res.data.length > 0) {
+          form.setFieldsValue(res.data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [params.id, form]);
 
   function submitForm(values) {
-    console.log(values);
+    update({ table: "patient", data: { ...values, id: params.id } }, values).catch((err) => console.log(err));
   }
 
   return (
     <div>
-      {Object.keys(data).length > 0 && (
+      {data.length > 0 && (
         <div className="flex flex-col">
-          <Tabs
-            className="mt-4! patient-tabs"
-            size="large"
-            tabPosition="left"
-            type="card"
-            defaultActiveKey="personal-information"
-            items={[
-              {
-                label: `Personal Information`,
-                key: "personal-information",
-                children: <PersonalInformation initialValues={data} />,
-              },
-            ]}
-          />
+          <Form form={form} layout="vertical" onFinish={submitForm}>
+            <Tabs
+              className="mt-4! patient-tabs"
+              size="large"
+              tabPosition="left"
+              type="card"
+              defaultActiveKey="personal-information"
+              items={[
+                {
+                  label: `Personal Information`,
+                  key: "personal-information",
+                  children: <PersonalInformation form={form} />,
+                },
+                {
+                  label: `Caracterização da doença`,
+                  key: "disease-characterization",
+                  children: <DiseaseCharacterization form={form} />,
+                },
+              ]}
+            />
+            <div className="flex justify-end mt-4">
+              <Button type="primary" size="large" onClick={() => form.submit()}>
+                Guardar
+              </Button>
+            </div>
+          </Form>
         </div>
       )}
     </div>

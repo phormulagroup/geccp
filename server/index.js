@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const path = require("path");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -32,10 +34,21 @@ const limiter = rateLimit({
   max: 600,
 });
 
-//app.use(limiter);
+app.use(limiter);
 
 app.use(express.json());
-app.use(cors());
+
+const corsOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",")
+      .map((origin) => origin.trim())
+      .filter(Boolean)
+  : null;
+
+if (!corsOrigins) {
+  console.warn("CORS_ORIGIN não está definido — a aceitar pedidos de qualquer origem. Define CORS_ORIGIN no .env para restringir.");
+}
+
+app.use(cors(corsOrigins ? { origin: corsOrigins } : undefined));
 
 let server = app.listen(port, () => {
   console.log(`---------- STARTING SERVER ----------`);
@@ -62,8 +75,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRouter);
-app.use("/logs", logsRouter);
-app.use("/user", userRouter);
+app.use("/logs", middleware, logsRouter);
+app.use("/user", middleware, userRouter);
 app.use("/patient", middleware, patientRouter);
 
 module.exports = app;

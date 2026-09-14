@@ -10,9 +10,8 @@ module.exports = {
           let file_name = null;
           sampleFile = file;
 
-          let query_get = `SELECT * FROM media WHERE name LIKE '%${sampleFile.name.split(".")[0].replace(" ", "_")}%'`;
           const query = util.promisify(db.query).bind(db);
-          const queryResult = await query(query_get);
+          const queryResult = await query("SELECT * FROM media WHERE name LIKE ?", [`%${sampleFile.name.split(".")[0].replace(" ", "_")}%`]);
 
           if (queryResult.length === 0) {
             file_name = sampleFile.name.replace(" ", "_");

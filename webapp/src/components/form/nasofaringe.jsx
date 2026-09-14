@@ -1,20 +1,13 @@
-import { useEffect, useState } from "react";
 import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Radio, Select, Switch } from "antd";
 import dayjs from "dayjs";
 import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
 
-import helpers from "../../utils/helpers";
 import CharlsonIndex from "../charlsonIndex";
 import Relapse from "./relapse";
 import PalliativeTreatment from "./palliativeTreatment";
+import AdvancedDiseaseAssessment from "./shared/advancedDiseaseAssessment";
 
-export default function Nasofaringe({ data, next, previous, form }) {
-  const [isOpenCharlsonIndex, setIsOpenCharlsonIndex] = useState(false);
-
-  function submitForm(values) {
-    next(values);
-  }
-
+export default function Nasofaringe({ form }) {
   return (
     <div className="cols-span-2 flex flex-col">
       <div className="border-dashed border-2 border-[#8BD1C6] p-6 rounded-[10px] grid grid-cols-4 gap-x-12 gap-y-4 mt-6">
@@ -54,22 +47,22 @@ export default function Nasofaringe({ data, next, previous, form }) {
       </div>
       <div className="border-dashed border-2 border-[#8BD1C6] p-6 rounded-[10px] grid grid-cols-4 gap-x-12 gap-y-4 mt-6">
         <div className="col-span-4 mt-2">
-          <p className="label">EBV plasmático baseline</p>
+          <p className="label">Doseamento de EBV plasmático baseline – em copias/ml (se conhecido)</p>
         </div>
         <div className="col-span-4 flex justify-start items-start gap-x-12">
-          <Form.Item name="nasofaringe_hpv" layout="horizontal" className="mb-0!">
+          <Form.Item name="nasofaringe_ebv_baseline" layout="horizontal" className="mb-0!">
             <Radio.Group size="large" options={[{ value: "Desconhecido/não realizado", label: "Desconhecido/não realizado" }]} />
           </Form.Item>
           <div>
-            <Form.Item name="nasofaringe_hpv" layout="horizontal" className="mb-0!">
+            <Form.Item name="nasofaringe_ebv_baseline" layout="horizontal" className="mb-0!">
               <Radio.Group size="large" options={[{ value: "Doseamento", label: "Doseamento" }]} />
             </Form.Item>
 
-            <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.nasofaringe_hpv !== currentValues.nasofaringe_hpv}>
+            <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.nasofaringe_ebv_baseline !== currentValues.nasofaringe_ebv_baseline}>
               {({ getFieldValue }) =>
-                getFieldValue("nasofaringe_hpv") === "Doseamento" && (
-                  <Form.Item name="nasofaringe_hpv_dose" layout="horizontal" className="mb-0! mt-2!">
-                    <InputNumber size="large" className="min-w-62.5!" />
+                getFieldValue("nasofaringe_ebv_baseline") === "Doseamento" && (
+                  <Form.Item name="nasofaringe_ebv_baseline_dose" layout="horizontal" className="mb-0! mt-2!">
+                    <InputNumber size="large" className="min-w-62.5!" placeholder="copias/ml" />
                   </Form.Item>
                 )
               }
@@ -93,7 +86,7 @@ export default function Nasofaringe({ data, next, previous, form }) {
           </Form.Item>
           <div>
             <Form.Item name="nasofaringe_histology" layout="horizontal" className="mb-0!">
-              <Radio.Group size="large" options={[{ value: "Outro", label: "Outro" }]} />
+              <Radio.Group size="large" options={[{ value: "Outro", label: "Outro - Especifique" }]} />
             </Form.Item>
 
             <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.nasofaringe_histology !== currentValues.nasofaringe_histology}>
@@ -274,24 +267,72 @@ export default function Nasofaringe({ data, next, previous, form }) {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-2">
                                       <div>
                                         <div className="pl-4 ml-0.5">
-                                          <Form.Item name="treatment_localized_disease">
+                                          <Form.Item name="treatment_localized_disease" className="mb-0!">
                                             <Radio.Group className="w-full!">
-                                              <Radio value="QT de indução seguida de QRT radical">QT de indução seguida de QRT radical</Radio>
-                                              <Radio value="QRT radical seguida de QT adjuvante">QRT radical seguida de QT adjuvante</Radio>
+                                              <Radio value="QT de indução">QT de indução</Radio>
+                                            </Radio.Group>
+                                          </Form.Item>
+                                          <Form.Item noStyle shouldUpdate={(prev, curr) => prev.treatment_localized_disease !== curr.treatment_localized_disease}>
+                                            {({ getFieldValue }) =>
+                                              getFieldValue("treatment_localized_disease") === "QT de indução" && (
+                                                <Form.Item name="induction_chemo_specified" className="w-full pl-7.5! mb-3!">
+                                                  <Input size="large" className="w-full" placeholder="Especifique o tratamento sistémico" />
+                                                </Form.Item>
+                                              )
+                                            }
+                                          </Form.Item>
+
+                                          <Form.Item name="treatment_localized_disease" className="mb-0!">
+                                            <Radio.Group className="w-full!">
+                                              <Radio value="QRT radical">QRT radical</Radio>
+                                            </Radio.Group>
+                                          </Form.Item>
+                                          <Form.Item noStyle shouldUpdate={(prev, curr) => prev.treatment_localized_disease !== curr.treatment_localized_disease}>
+                                            {({ getFieldValue }) =>
+                                              getFieldValue("treatment_localized_disease") === "QRT radical" && (
+                                                <Form.Item name="radical_qrt_specified" className="w-full pl-7.5! mb-3!">
+                                                  <Input size="large" className="w-full" placeholder="Especifique o tratamento sistémico" />
+                                                </Form.Item>
+                                              )
+                                            }
+                                          </Form.Item>
+
+                                          <Form.Item name="treatment_localized_disease" className="mb-0!">
+                                            <Radio.Group className="w-full!">
                                               <Radio value="RT radical">RT radical</Radio>
-                                              <Radio value="Outro">Outro</Radio>
                                             </Radio.Group>
                                           </Form.Item>
 
-                                        <Form.Item noStyle shouldUpdate={(prev, curr) => prev.treatment_localized_disease !== curr.treatment_localized_disease}>
-                                          {({ getFieldValue }) =>
-                                            getFieldValue("treatment_localized_disease") === "Outro" && (
-                                              <Form.Item name="treatment_localized_disease_specified" className="w-full">
-                                                <Input size="large" className="w-full" placeholder="Qual?" />
-                                              </Form.Item>
-                                            )
-                                          }
-                                        </Form.Item>
+                                          <Form.Item name="treatment_localized_disease" className="mb-0!">
+                                            <Radio.Group className="w-full!">
+                                              <Radio value="QT adjuvante">QT adjuvante</Radio>
+                                            </Radio.Group>
+                                          </Form.Item>
+                                          <Form.Item noStyle shouldUpdate={(prev, curr) => prev.treatment_localized_disease !== curr.treatment_localized_disease}>
+                                            {({ getFieldValue }) =>
+                                              getFieldValue("treatment_localized_disease") === "QT adjuvante" && (
+                                                <Form.Item name="adjuvant_chemo_specified" className="w-full pl-7.5! mb-3!">
+                                                  <Input size="large" className="w-full" placeholder="Especifique o tratamento sistémico" />
+                                                </Form.Item>
+                                              )
+                                            }
+                                          </Form.Item>
+
+                                          <Form.Item name="treatment_localized_disease" className="mb-0!">
+                                            <Radio.Group className="w-full!">
+                                              <Radio value="Outro">Outro - Especifique</Radio>
+                                            </Radio.Group>
+                                          </Form.Item>
+
+                                          <Form.Item noStyle shouldUpdate={(prev, curr) => prev.treatment_localized_disease !== curr.treatment_localized_disease}>
+                                            {({ getFieldValue }) =>
+                                              getFieldValue("treatment_localized_disease") === "Outro" && (
+                                                <Form.Item name="treatment_localized_disease_specified" className="w-full pl-7.5!">
+                                                  <Input size="large" className="w-full" placeholder="Qual?" />
+                                                </Form.Item>
+                                              )
+                                            }
+                                          </Form.Item>
                                         </div>
                                       </div>
                                     </div>
@@ -330,203 +371,7 @@ export default function Nasofaringe({ data, next, previous, form }) {
                                   </div>
                                   <div className="col-span-4 flex flex-col w-full gap-x-12 gap-y-4">
                                     <div className="p-6 border-2 border-dashed border-[#8BD1C6] rounded-[10px] grid grid-cols-3 gap-x-12 gap-y-4">
-                                      {/* Recidiva com doença locorregional e metastização à distância */}
-
-                                      {/* Locais de metastização à distância */}
-                                      <div className="col-span-3 mt-2">
-                                        <p className="font-bold">Locais de metastização à distância</p>
-                                      </div>
-                                      <div className="col-span-3">
-                                        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
-                                      </div>
-                                      <div className="col-span-3 grid grid-cols-5 gap-x-12">
-                                        <div>
-                                          <Form.Item name="distant_metastasis_sites" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="Osso">Osso</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div>
-                                          <Form.Item name="distant_metastasis_sites" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="Pulmão">Pulmão</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div className="col-span-3">
-                                          <Form.Item name="distant_metastasis_sites" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="Fígado">Fígado</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div>
-                                          <Form.Item name="distant_metastasis_sites" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="Sistema nervoso central">Sistema nervoso central</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div>
-                                          <Form.Item name="distant_metastasis_sites" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="Outro">Outro</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-
-                                          <Form.Item
-                                            noStyle
-                                            shouldUpdate={(prevValues, currentValues) => prevValues.distant_metastasis_sites !== currentValues.distant_metastasis_sites}
-                                          >
-                                            {({ getFieldValue }) =>
-                                              getFieldValue("distant_metastasis_sites") === "Outro" && (
-                                                <Form.Item name="distant_metastasis_sites_other" className="mb-0! mt-2!">
-                                                  <Input size="large" placeholder="Qual?" />
-                                                </Form.Item>
-                                              )
-                                            }
-                                          </Form.Item>
-                                        </div>
-                                      </div>
-
-                                      {/* Número de órgãos envolvidos */}
-                                      <div className="col-span-3 mt-2">
-                                        <p className="font-bold">Número de órgãos envolvidos</p>
-                                      </div>
-                                      <div className="col-span-3">
-                                        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
-                                      </div>
-                                      <div className="col-span-3 grid grid-cols-5 gap-x-12">
-                                        <div>
-                                          <Form.Item name="organs_envolved" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="1">1</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div className="col-span-4">
-                                          <Form.Item name="organs_envolved" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="2">2</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div>
-                                          <Form.Item name="organs_envolved" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="3 ou mais">3 ou mais</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                      </div>
-
-                                      {/* Número total de lesões */}
-                                      <div className="col-span-3 mt-2">
-                                        <p className="font-bold">Número total de lesões</p>
-                                      </div>
-                                      <div className="col-span-3">
-                                        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
-                                      </div>
-                                      <div className="col-span-3 grid grid-cols-5 gap-x-12">
-                                        <div>
-                                          <Form.Item name="total_lesions" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="1">1</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div className="col-span-4">
-                                          <Form.Item name="total_lesions" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="2">2</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div>
-                                          <Form.Item name="total_lesions" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="3">3</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div className="col-span-4">
-                                          <Form.Item name="total_lesions" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="4">4</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div>
-                                          <Form.Item name="total_lesions" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="5">5</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div className="col-span-4">
-                                          <Form.Item name="total_lesions" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="6 ou mais">6 ou mais</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                      </div>
-
-                                      {/* PD-L1 CPS */}
-                                      <div className="col-span-3 mt-2">
-                                        <p className="font-bold">PD-L1 CPS</p>
-                                      </div>
-                                      <div className="col-span-3">
-                                        <Divider className="mt-0! mb-0! h-[.5] bg-[#17A38D]" />
-                                      </div>
-                                      <div className="col-span-3 grid grid-cols-5 gap-x-12">
-                                        <div>
-                                          <Form.Item name="pdl1_cps" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="CPS < 1">{"CPS < 1"}</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div className="col-span-4">
-                                          <Form.Item name="pdl1_cps" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="CPS 1-19">CPS 1-19</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div>
-                                          <Form.Item name="pdl1_cps" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="CPS >= 20">{"CPS >= 20"}</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div className="col-span-4">
-                                          <Form.Item name="pdl1_cps" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="Desconhecido / não realizado">{"Desconhecido / não realizado"}</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-                                        </div>
-                                        <div>
-                                          <Form.Item name="pdl1_cps" className="mb-0!">
-                                            <Radio.Group className="flex w-full!" size="large">
-                                              <Radio value="Valor absoluto">Valor absoluto</Radio>
-                                            </Radio.Group>
-                                          </Form.Item>
-
-                                          <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.pdl1_cps !== currentValues.pdl1_cps}>
-                                            {({ getFieldValue }) =>
-                                              getFieldValue("pdl1_cps") === "Valor absoluto" && (
-                                                <Form.Item name="pdl1_cps_specified" className="mb-0! mt-2!">
-                                                  <Input size="large" placeholder="Qual?" />
-                                                </Form.Item>
-                                              )
-                                            }
-                                          </Form.Item>
-                                        </div>
-                                      </div>
+                                      <AdvancedDiseaseAssessment namePrefix="nasofaringe_advanced" />
 
                                       <div className="col-span-4">
                                         <PalliativeTreatment form={form} />

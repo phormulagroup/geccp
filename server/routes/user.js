@@ -1,6 +1,7 @@
 var express = require("express");
 var dayjs = require("dayjs");
 var util = require("util");
+var mysql = require("mysql");
 var fileUpload = require("express-fileupload");
 const bcrypt = require("bcryptjs");
 var router = express.Router();
@@ -45,7 +46,7 @@ router.get("/readById", async (req, res) => {
   console.log("//// READ USER BY ID ////");
   try {
     const query = util.promisify(db.query).bind(db);
-    const rows = await query(`SELECT * FROM user WHERE id = ${req.query.id}`);
+    const rows = await query("SELECT * FROM user WHERE id = ?", [req.query.id]);
     res.send(rows);
   } catch (e) {
     console.log(e);
@@ -91,12 +92,12 @@ router.post("/update", async (req, res, next) => {
       delete data.confirm_new_password;
     }
 
-    const columns = Object.keys(data);
+    const columns = Object.keys(data).map((col) => mysql.escapeId(col));
     const values = Object.values(data);
 
     const query = util.promisify(db.query).bind(db);
-    await query("UPDATE user SET " + columns.join(" = ?, ") + " = ? WHERE id = " + whereId, values);
-    let user = await query("SELECT * FROM user WHERE id = ?", whereId);
+    await query("UPDATE user SET " + columns.join(" = ?, ") + " = ? WHERE id = ?", [...values, whereId]);
+    let user = await query("SELECT * FROM user WHERE id = ?", [whereId]);
 
     let newToken = await createToken(user[0]);
     res.send({ user: user[0], token: newToken });
@@ -110,7 +111,7 @@ router.post("/delete", async (req, res, next) => {
   try {
     const query = util.promisify(db.query).bind(db);
     let id_user = req.body.data.id_user;
-    const deletedRow = await query("DELETE FROM user WHERE id = " + id_user);
+    const deletedRow = await query("DELETE FROM user WHERE id = ?", [id_user]);
     res.send(deletedRow);
   } catch (err) {
     throw err;

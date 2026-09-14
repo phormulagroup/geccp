@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { CloseOutlined, DownOutlined, LoginOutlined, MenuOutlined, ProfileOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Drawer, Dropdown, Layout, Menu } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import logo from "../assets/login/Cancro-da-cabeca-e-pescoco.svg";
 
-import endpoints from "../utils/endpoints";
 import config from "../utils/config";
 
-import { Context } from "../utils/context";
+import { Context } from "../utils/appContext";
 
 import Logout from "../components/logout";
 
@@ -17,7 +15,6 @@ const { Header, Content, Sider } = Layout;
 const Main = () => {
   const { user, logout, isLoggedIn } = useContext(Context);
   const location = useLocation();
-  const [current, setCurrent] = useState("/app");
   const [isOpenDrawerMenu, setIsOpenDrawerMenu] = useState(false);
   const [isOpenLogout, setIsOpenLogout] = useState(false);
 
@@ -40,20 +37,14 @@ const Main = () => {
     };
   }
 
+  const pathname = location.pathname.split("/");
+  const current = pathname.length > 2 ? `/${pathname[1]}/${pathname[2]}` : `/${pathname[pathname.length - 1]}`;
+
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/");
     }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    let pathname = location.pathname.split("/");
-    if (pathname.length > 2) {
-      setCurrent(`/${pathname[1]}/${pathname[2]}`);
-    } else {
-      setCurrent(`/${pathname[pathname.length - 1]}`);
-    }
-  }, [location]);
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     const detectSize = () => {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { Context } from "../utils/context";
+import { Context } from "../utils/appContext";
 
 import loginBg from "../assets/login/GECCP-Login.png";
 import { Spin } from "antd";

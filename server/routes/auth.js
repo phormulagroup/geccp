@@ -82,7 +82,6 @@ router.post("/generatePassword", async (req, res, next) => {
     const password = await bcrypt.hash(data.password, saltRounds);
     await query("UPDATE user SET password = ?, generate_password = 0 WHERE email = ?", [password, data.email]);
     res.send({ updated: true });
-    conn.release();
   } catch (err) {
     throw err;
   }
@@ -93,9 +92,7 @@ router.post("/login", async (req, res, next) => {
   try {
     const query = util.promisify(db.query).bind(db);
     let data = req.body.data;
-    console.log(data);
     const user = await query("SELECT * FROM user WHERE email = ?", [data.email]);
-    console.log(user);
     if (user.length > 0) {
       const comparePassword = await bcrypt.compare(data.password, user[0].password);
       if (comparePassword) {

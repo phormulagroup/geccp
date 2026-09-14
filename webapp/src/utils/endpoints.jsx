@@ -20,6 +20,7 @@ const endpoints = {
     read: "/patient/read",
     readById: "/patient/readById",
     readByInstitution: "/patient/readByInstitution",
+    history: "/patient/history",
     update: "/patient/update",
     create: "/patient/create",
     delete: "/patient/delete",

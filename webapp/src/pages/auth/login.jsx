@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Footer } from "antd/es/layout/layout";
-import { Button, Checkbox, Form, Input, message } from "antd";
+import { Button, Checkbox, Form, Input } from "antd";
 
-import { Context } from "../../utils/context";
+import { Context } from "../../utils/appContext";
 
 import loginBg from "../../assets/login/GECCP-Login.png";
 import logo from "../../assets/login/Cancro-da-cabeca-e-pescoco.svg";
 import logoStudy from "../../assets/login/Grupo-de-Estudos-de-Cancro-da-Cabeca-e-Pescoco.svg";
-import espghan from "../../assets/ESPGHAN.svg";
 import dayjs from "dayjs";
 import axios from "axios";
 import endpoints from "../../utils/endpoints";
@@ -24,7 +23,7 @@ function Login() {
     if (isLoggedIn) {
       navigate("/app");
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   function submit(values) {
     setIsButtonLoading(true);

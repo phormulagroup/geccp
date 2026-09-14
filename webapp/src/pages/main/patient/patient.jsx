@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import endpoints from "../../../utils/endpoints";
-import { Context } from "../../../utils/context";
+import { Context } from "../../../utils/appContext";
 import { Button, DatePicker, Form, Input, InputNumber, Table } from "antd";
 import dayjs from "dayjs";
 import { AiOutlineFilter } from "react-icons/ai";
@@ -10,45 +10,38 @@ import Create from "./create";
 
 export default function Patients() {
   const { user } = useContext(Context);
-  const [data, setData] = useState([]);
   const [tableData, setTableData] = useState([]);
-  const [isOpenCreate, setIsOpenCreate] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (!user.id_institution) return;
 
-  function getData() {
-    console.log(user);
+    function prepareTableData(array) {
+      let newArray = [];
+      for (let i = 0; i < array.length; i++) {
+        newArray.push({
+          ...array[i],
+          birth_date: array[i].BIRTH_DATE ? dayjs(array[i].BIRTH_DATE).format("DD/MM/YYYY") : null,
+          details: <Button onClick={() => navigate(`/app/paciente/${array[i].ID}`)}>Details</Button>,
+          full_data: array[i],
+        });
+      }
+
+      setTableData(newArray);
+    }
+
     axios
       .get(endpoints.patient.readByInstitution, {
         params: { id_institution: user.id_institution },
       })
       .then((res) => {
-        setData(res.data);
         prepareTableData(res.data);
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  function prepareTableData(array) {
-    let newArray = [];
-    for (let i = 0; i < array.length; i++) {
-      newArray.push({
-        ...array[i],
-        birth_date: array[i].BIRTH_DATE ? dayjs(array[i].BIRTH_DATE).format("DD/MM/YYYY") : null,
-        details: <Button onClick={() => navigate(`/app/paciente/${array[i].ID}`)}>Details</Button>,
-        full_data: array[i],
-      });
-    }
-
-    setTableData(newArray);
-  }
+  }, [user.id_institution, navigate]);
 
   return (
     <div>
@@ -60,8 +53,8 @@ export default function Patients() {
       </div>
       <Table
         columns={[
-          { title: "id", dataIndex: "id", key: "id" },
-          { title: "Nº Processo", dataIndex: "process_number", key: "process_number" },
+          { title: "id", key: "id", render: (_, record) => record.id ?? record.ID },
+          { title: "Nº Processo", key: "process_number", render: (_, record) => record.process_number ?? record.PROCESS_NUMBER },
           { title: "Data de nascimento", dataIndex: "birth_date", key: "birth_date" },
           { title: "", dataIndex: "details", key: "details" },
         ]}

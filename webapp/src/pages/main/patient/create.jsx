@@ -1,5 +1,6 @@
-import { use, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form } from "antd";
+import { useNavigate } from "react-router";
 
 import { AiFillPlusCircle, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlinePlayCircle, AiOutlinePlus, AiOutlinePlusCircle } from "react-icons/ai";
 
@@ -8,10 +9,11 @@ import PersonalInformation from "../../../components/form/personalInformation";
 import imgImportCSV from "../../../assets/Via-CSV.svg";
 import imgImportStep from "../../../assets/Step-by-Step.svg";
 import DiseaseCharacterization from "../../../components/form/diseaseCharacterization";
-import { Context } from "../../../utils/context";
+import { Context } from "../../../utils/appContext";
 
 export default function Create() {
-  const { messageApi } = useContext(Context);
+  const { user, create } = useContext(Context);
+  const navigate = useNavigate();
   const [type, setType] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [initialData] = useState({
@@ -32,12 +34,13 @@ export default function Create() {
     setCurrentStep(currentStep - 1);
   }
 
-  function submitForm(values) {
-    console.log(values);
-    messageApi.open({
-      type: "success",
-      content: `Plataforma está em modo de teste, os dados submetidos não serão guardados.`,
-    });
+  async function submitForm(values) {
+    try {
+      await create({ table: "patient", data: { ...values, id_institution: user.id_institution } });
+      navigate("/app/paciente");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (

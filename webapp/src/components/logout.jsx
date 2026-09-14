@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Col, Row, Modal } from "antd";
 
 function Logout({ open, close, submit }) {
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const [isButtonLoading] = useState(false);
 
   function handleClose() {
     close();

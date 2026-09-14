@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Radio, Select, Switch } from "antd";
 import dayjs from "dayjs";
 import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
@@ -6,13 +6,8 @@ import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
 import helpers from "../../utils/helpers";
 import CharlsonIndex from "../charlsonIndex";
 
-export default function PersonalInformation({ data, next, previous, form }) {
+export default function PersonalInformation({ form }) {
   const [isOpenCharlsonIndex, setIsOpenCharlsonIndex] = useState(false);
-
-  function submitForm(values) {
-    console.log(values);
-    next();
-  }
 
   function closeCharlsonIndex(result) {
     console.log(result);
@@ -247,7 +242,7 @@ export default function PersonalInformation({ data, next, previous, form }) {
                         { value: 0, label: "Uma ou duas" },
                         { value: 1, label: "Três ou quatro" },
                         { value: 2, label: "Cinco ou seis" },
-                        { value: 3, label: "De sete a nove" },
+                        { value: 3, label: "Sete a nove" },
                         { value: 4, label: "Dez ou mais" },
                       ]}
                     />
@@ -306,11 +301,11 @@ export default function PersonalInformation({ data, next, previous, form }) {
         </div>
 
         <Form.List name="other_consumption">
-          {(fields, { add, remove, move }) => (
+          {(fields, { add, remove }) => (
             <div>
               <p className="label mb-2">Outros consumos</p>
               {fields.map((field) => (
-                <div className="flex flex-nowrap mt-4">
+                <div key={field.key} className="flex flex-nowrap mt-4">
                   <Form.Item name={[field.name, "name"]} className="w-full mb-0!">
                     <Input size="large" placeholder="Escrever outro consumo" />
                   </Form.Item>
@@ -332,11 +327,11 @@ export default function PersonalInformation({ data, next, previous, form }) {
 
         <div>
           <Form.List name="comorbidities">
-            {(fields, { add, remove, move }) => (
+            {(fields, { add, remove }) => (
               <div>
                 <p className="label mb-2">Comorbilidades</p>
                 {fields.map((field) => (
-                  <>
+                  <Fragment key={field.key}>
                     <div className="flex flex-nowrap mt-4">
                       <div className="flex flex-col w-full">
                         <Form.Item name={[field.name, "name"]} className="mb-0!">
@@ -398,7 +393,7 @@ export default function PersonalInformation({ data, next, previous, form }) {
                       ) : null}
                     </div>
                     {fields.length > 1 && field.name < fields.length - 1 ? <Divider className="mt-4! mb-4!" /> : null}
-                  </>
+                  </Fragment>
                 ))}
                 <Button className="mt-4" size="large" onClick={() => add()} icon={<AiOutlinePlusCircle />}>
                   Adicionar comorbilidade
