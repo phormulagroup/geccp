@@ -1,0 +1,16 @@
+# Só para Node a correr numa porta local com o Apache à frente como proxy inverso
+# (requer mod_rewrite e mod_proxy/mod_proxy_http). Copiar para .htaccess e ajustar a porta (= PORT no .env).
+# NÃO usar em "Setup Node.js App" do cPanel/Passenger: aí o painel gere o .htaccess.
+
+# Forçar HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Nunca servir ficheiros sensíveis
+<FilesMatch "^(\.env.*|package(-lock)?\.json)$">
+  Require all denied
+</FilesMatch>
+
+# Encaminhar tudo para a API Node
+RewriteRule ^(.*)$ http://127.0.0.1:4000/$1 [P,L]

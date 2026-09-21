@@ -1,6 +1,14 @@
-require("dotenv").config();
-
 const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
+
+const missingEnv = ["DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "JWT_SECRET"].filter((key) => !process.env[key]);
+if (missingEnv.length > 0) {
+  console.error(
+    `Faltam variáveis de ambiente: ${missingEnv.join(", ")}. Cria o ficheiro ${path.join(__dirname, ".env")} (a partir de .env.example) ou define-as no painel do alojamento.`
+  );
+  process.exit(1);
+}
+
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
@@ -19,6 +27,8 @@ const patientRouter = require("./routes/patient");
 
 const app = express();
 const port = process.env.PORT || 4000;
+
+app.set("trust proxy", 1);
 
 app.use(
   helmet({

@@ -1,6 +1,5 @@
 const config = {
-  //server_ip: "http://127.0.0.1:4000",
-  server_ip: "https://geccpapi.phormuladev.com",
+  server_ip: import.meta.env.VITE_API_URL || "https://geccpapi.phormuladev.com",
 };
 
 export default config;
