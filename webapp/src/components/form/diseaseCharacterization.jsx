@@ -19,7 +19,7 @@ export default function DiseaseCharacterization({ form }) {
         <div className="col-span-2">
           <Divider className="mt-0! mb-0! h-1 bg-[#17A38D]" />
         </div>
-        <div className="col-span-2 flex gap-x-12">
+        <div className="col-span-2 flex flex-wrap gap-x-12 gap-y-4">
           <div>
             <Form.Item name="tumor_location" layout="horizontal" className="mb-0!">
               <Radio.Group size="large" options={[{ value: "Cavidade oral", label: "Cavidade oral" }]} />
@@ -73,7 +73,7 @@ export default function DiseaseCharacterization({ form }) {
           {({ getFieldValue }) => (
             <>
               {getFieldValue("tumor_location") === "Cavidade oral" && (
-                <div className=" col-span-2 p-6 bg-[#C5E8E3] border-[2px] border-dashed border-[#8BD1C6] rounded-[5px] flex gap-x-12">
+                <div className=" col-span-2 p-6 bg-[#C5E8E3] border-[2px] border-dashed border-[#8BD1C6] rounded-[5px] flex flex-wrap gap-x-12 gap-y-4">
                   <div>
                     <Form.Item name="oral_cavity_details" layout="horizontal" className="mb-0!">
                       <Radio.Group size="large" options={[{ value: "HPV +", label: "HPV +" }]} />
@@ -92,7 +92,7 @@ export default function DiseaseCharacterization({ form }) {
                 </div>
               )}
               {getFieldValue("tumor_location") === "Orofaringe" && (
-                <div className=" col-span-2 p-6 bg-[#C5E8E3] border-[2px] border-dashed border-[#8BD1C6] rounded-[5px] flex gap-x-12">
+                <div className=" col-span-2 p-6 bg-[#C5E8E3] border-[2px] border-dashed border-[#8BD1C6] rounded-[5px] flex flex-wrap gap-x-12 gap-y-4">
                   <div>
                     <Form.Item name="orofaringe_details" layout="horizontal" className="mb-0!">
                       <Radio.Group size="large" options={[{ value: "HPV +", label: "HPV +" }]} />
@@ -111,7 +111,7 @@ export default function DiseaseCharacterization({ form }) {
                 </div>
               )}
               {getFieldValue("tumor_location") === "Primário oculto da cabeça e pescoço" && (
-                <div className=" col-span-2 p-6 bg-[#C5E8E3] border-[2px] border-dashed border-[#8BD1C6] rounded-[5px] flex gap-x-12">
+                <div className=" col-span-2 p-6 bg-[#C5E8E3] border-[2px] border-dashed border-[#8BD1C6] rounded-[5px] flex flex-wrap gap-x-12 gap-y-4">
                   <div>
                     <Form.Item name="hidden_primary_head_neck" layout="horizontal" className="mb-0!">
                       <Radio.Group size="large" options={[{ value: "EBV +", label: "EBV +" }]} />

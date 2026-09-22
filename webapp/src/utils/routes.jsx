@@ -10,6 +10,7 @@ const Main = lazy(() => import("../pages/main/main"));
 const Patient = lazy(() => import("../pages/main/patient/patient"));
 const PatientDetails = lazy(() => import("../pages/main/patient/details"));
 const PatientCreate = lazy(() => import("../pages/main/patient/create"));
+const Profile = lazy(() => import("../pages/main/profile/profile"));
 
 export default function AppRoutes() {
   const { isLoggedIn, isLoading } = useContext(Context);
@@ -37,6 +38,8 @@ export default function AppRoutes() {
                   <Route exact path="/app/paciente" element={<Patient />} />
                   <Route exact path="/app/paciente/adicionar" element={<PatientCreate />} />
                   <Route exact path="/app/paciente/:id" element={<PatientDetails />} />
+                  <Route exact path="/app/perfil" element={<Profile />} />
+                  <Route path="/*" element={<Navigate to="/app/" replace />} />
                 </Route>
               </>
             ) : (
