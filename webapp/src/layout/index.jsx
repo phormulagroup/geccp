@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CloseOutlined, DownOutlined, LoginOutlined, MenuOutlined, ProfileOutlined } from "@ant-design/icons";
+import { AiOutlineClose, AiOutlineDashboard, AiOutlineDown, AiOutlineLogout, AiOutlineMenu, AiOutlineTeam, AiOutlineUser } from "react-icons/ai";
 import { Avatar, Button, Divider, Drawer, Dropdown, Layout, Menu } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/login/Cancro-da-cabeca-e-pescoco.svg";
@@ -23,7 +23,7 @@ const Main = () => {
     height: window.innerHeight,
   });
 
-  const [items] = useState([getItem("Dashboard", "/app"), getItem("Pacientes", "/app/paciente")]);
+  const [items] = useState([getItem("Dashboard", "/app", <AiOutlineDashboard />), getItem("Pacientes", "/app/paciente", <AiOutlineTeam />)]);
 
   const navigate = useNavigate();
 
@@ -37,8 +37,8 @@ const Main = () => {
     };
   }
 
-  const pathname = location.pathname.split("/");
-  const current = pathname.length > 2 ? `/${pathname[1]}/${pathname[2]}` : `/${pathname[pathname.length - 1]}`;
+  const segments = location.pathname.split("/").filter(Boolean);
+  const current = segments.length > 2 ? `/${segments[0]}/${segments[1]}` : `/${segments.join("/")}`;
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -85,7 +85,7 @@ const Main = () => {
         ) : (
           <Drawer className="menu-drawer" width={400} open={isOpenDrawerMenu} onClose={() => setIsOpenDrawerMenu(false)} maskClosable={true} closable={false}>
             <Button type="text" className="absolute right-5 top-5 font-bold" onClick={() => setIsOpenDrawerMenu(false)}>
-              <CloseOutlined className="text-[#0c3c61]" />
+              <AiOutlineClose className="text-[#0c3c61]" />
             </Button>
             <div className="bg-[#E9F2FF] flex p-[60px_20px_20px_20px] cursor-pointer" onClick={() => handleClickMenu({ key: "/app/perfil" })}>
               <Avatar className="w-12.5 h-12.5 mr-2" src={`${config.server_ip}/media/${user.img ?? "User-default.svg"}`} />
@@ -98,7 +98,7 @@ const Main = () => {
               <Menu className="principal-menu" selectedKeys={[current]} mode="inline" items={items} onClick={handleClickMenu} />
               <Divider />
               <a className={`dropdown-item flex items-center w-full min-h-11.25 pl-6`} onClick={() => setIsOpenLogout(true)}>
-                <LoginOutlined className="mr-2" /> Logout
+                <AiOutlineLogout className="mr-2" /> Logout
               </a>
             </div>
           </Drawer>
@@ -114,7 +114,7 @@ const Main = () => {
                       {
                         label: (
                           <a className="dropdown-item flex items-center" onClick={() => navigate("/app/perfil")}>
-                            <ProfileOutlined className="mr-2" /> Perfil
+                            <AiOutlineUser className="mr-2" /> Perfil
                           </a>
                         ),
                         key: "0",
@@ -122,7 +122,7 @@ const Main = () => {
                       {
                         label: (
                           <a className="dropdown-item flex items-center" onClick={() => setIsOpenLogout(true)}>
-                            <LoginOutlined className="mr-2" /> Logout
+                            <AiOutlineLogout className="mr-2" /> Logout
                           </a>
                         ),
                         key: "2",
@@ -134,11 +134,11 @@ const Main = () => {
                   <div className="flex justify-center items-center mr-2 cursor-pointer">
                     <Avatar src={`${config.server_ip}/media/${user.img ?? "User-default.svg"}`} />
                     <p className="text-[12px] ml-2 mr-2">{user.name}</p>
-                    <DownOutlined />
+                    <AiOutlineDown />
                   </div>
                 </Dropdown>
               ) : (
-                <MenuOutlined onClick={() => setIsOpenDrawerMenu(true)} />
+                <AiOutlineMenu onClick={() => setIsOpenDrawerMenu(true)} />
               )}
             </div>
           </Header>

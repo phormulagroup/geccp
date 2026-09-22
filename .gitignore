@@ -28,6 +28,11 @@ dist-ssr
 .env
 .env.*
 !.env.example
+# Webapp env files hold no secrets (only public API URLs) — kept in git so
+# builds are reproducible across machines/CI.
+!webapp/.env.development
+!webapp/.env.staging
+!webapp/.env.production
 
 # Deploy packages
 deploy
