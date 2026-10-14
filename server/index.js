@@ -78,6 +78,14 @@ db.getConnection((error, conn) => {
   }
 });
 
+// A API é publicada em <dominio>/api: aceita o prefixo /api e remove-o antes das rotas
+app.use((req, res, next) => {
+  if (req.url === "/api" || req.url.startsWith("/api/") || req.url.startsWith("/api?")) {
+    req.url = req.url.slice(4) || "/";
+  }
+  next();
+});
+
 app.use("/media", express.static("media"));
 
 app.get("/", (req, res) => {
